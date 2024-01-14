@@ -163,8 +163,8 @@ float sdEgg( in float2 p, in float ra, in float rb )
         col = float4(col2,1.0);
     }
 
-				return float4(col);
-
+				// return float4(p + float2(0.0, 0.02), 0.0, 1.0);
+    			return col;
 
 				// return float4(vPixel/GetWindowResolution(), 0.0, 1.0);
 

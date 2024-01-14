@@ -170,8 +170,9 @@ float sdfCoolS( in float2 p )
 				// col *= 0.8 + 0.2*cos(120.0*d);
 				// col = lerp( col, float4(1.0, 1.0, 1.0, 1.0), 1.0-smoothstep(0.005,0.005,abs(d)) );
                 p *= 1.25;
+                float ra = abs(sin(TIME));
 
-                float d =  sdfCoolS(p);
+                float d =  sdfCoolS(p)- ra;
 
                 // float4 col = float4(0.0,0.0,0.0, 1.0) - sign(d)*float4(col2, 1.0);
                 float4 col = (d>0.0) ? float4(0.0,0.0,0.0,0.0) : float4(backGround, (backGround.x + backGround.y + backGround.z)/3.0); //vec3(0.4,0.7,0.85);

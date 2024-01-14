@@ -141,9 +141,9 @@ float sdCutDisk( in float2 p, in float r, in float h )
 
 
                 float2 p = coordinate;
+                
     // float4 colFull = float4(0.0,0.0,0.0, 1.0) - sign(d)*float4(col2, 1.0);
 
-    
     // animation
     float ra = 0.75;
     float he = ra * clamp(cos(TIME*0.8),-0.999999,0.999999);
@@ -151,16 +151,17 @@ float sdCutDisk( in float2 p, in float r, in float h )
     // distance
     float d = sdCutDisk(p,ra,he);
    
+    float4 colFull = float4(0.0,0.0,0.0, 1.0) - sign(d)*float4(col2, 1.0);
+    colFull *= 1.0 - exp(-64.0*abs(d));
+    // colFull *= 0.8 + 0.2*cos(128.0*abs(d));
+    colFull = lerp( colFull, float4(1.0, 1.0, 1.0, 1.0	), 1.0-smoothstep(0.0,0.015,abs(d)) );
+
     // coloring
     // float4 col = (d>0.0) ? float4(0.0,0.0,0.0, 1.0) : float4(0.0, 0.0 , 0.0, 0.0);
     // col *= 1.0 - exp(-7.0*abs(d));
     // col *= 0.8 + 0.2*cos(128.0*abs(d));
     // col = lerp( col, float4(1.0, 1.0, 1.0, 1.0	), 1.0-smoothstep(0.0,0.015,abs(d)) );
 
-    float4 colFull = float4(0.0,0.0,0.0, 1.0) - sign(d)*float4(col2, 1.0);
-    colFull *= 1.0 - exp(-64.0*abs(d));
-    // colFull *= 0.8 + 0.2*cos(128.0*abs(d));
-    colFull = lerp( colFull, float4(1.0, 1.0, 1.0, 1.0	), 1.0-smoothstep(0.0,0.015,abs(d)) );
 
     // if(col.z == 0.0)
     // {

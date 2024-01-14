@@ -182,17 +182,20 @@ float sdBlobbyCross( in float2 pos, float he )
 
 			    // animation
 			    p *= 2;
- 	float time = TIME;
-    float he = sin(time*0.43+4.0); he = (0.001+abs(he)) * ((he>=0.0)?1.0:-1.0);
-    float ra = 0.1 + 0.5*(0.5+0.5*sin(time*1.7)) + max(0.0,he-0.7);
-
-	float d = sdBlobbyCross( p, he ) - ra;
+			 	float time = TIME;
+			    float he = sin(time*0.43+4.0); 
+			    he = (0.001+abs(he)) * ((he>=0.0)?1.0:-1.0);
+			    float ra = 0.1 + 0.5*(0.5+0.5*sin(time*1.7)) + max(0.0,he-0.7);
+			
+				float d = sdBlobbyCross( p, he ) - ra;
 
 				float4 col = float4(0.0,0.0,0.0, 1.0) - sign(d)*float4(col2, 1.0);
 				col *= 1.0 - exp(-48.0*abs(d));
 				col *= 0.8 + 0.2*cos(120.0*d);
 				col = lerp( col, float4(1.0, 1.0, 1.0, 1.0), 1.0-smoothstep(0.005,0.005,abs(d)) );
-					return float4(col);
+					
+
+				return float4(col);
 
 
 				// return float4(vPixel/GetWindowResolution(), 0.0, 1.0);

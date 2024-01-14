@@ -83,15 +83,6 @@
 
 
 
-// float2 gra( in float2 p )
-// {
-//     const float e = 0.0002;
-//     return float2(map(p + float2(e,0.0))-map(p-vec2(e,0.0)),
-//                 map(p + float2(0.0,e))-map(p-float2(0.0,e)))/(2.0*e);
-// }
-
-
-
 // distance to rounded box
 
 float3 sdgCross( in float2 p, in float2 b ) 
@@ -183,23 +174,24 @@ float sdgCrossFloat( in float2 p, in float2 b )
     float px = 1.0;
     float2 p = coordinate;
 
- // size
-    float2 si = 0.5 + 0.3*cos( TIME + float2(0.0,1.57) + 0.0 );     if( si.x<si.y ) si=si.yx;
+    // size
+    float2 si = 0.5 + 0.3*cos( TIME + float2(0.0,1.57) + 0.0 );     
+    if( si.x<si.y ) si=si.yx;
     // corner radious
-    float ra = 0.0;//0.1*(0.5+0.5*sin(iTime*1.2));
+    float ra =0.1*(0.5+0.5*sin(TIME*1.2));
 
     // sdf(p) and gradient(sdf(p))
     // float3 dg = sdgCross(p,si);
-    float dg = sdgCrossFloat(p,si);
+    float dg = sdgCross(p,si) - ra;
     float d = dg;
-    float2 g = float2(0.0,0.0);
+    // float2 g = float2(0.0,0.0);
     
     // central differenes based gradient, for comparison
     // g = vec2(dFdx(d),dFdy(d))/(2.0/iResolution.y);
     
     // coloring
     float3 col = (d>0.0) ? float3(0.9,0.6,0.3) : float3(0.4,0.7,0.85);
-    col *= 1.0 + float3(0.5*g,0.0);
+    // col *= 1.0 + float3(0.0,0.0);
   //col = vec3(0.5+0.5*g,1.0);
     col *= 1.0 - 0.5*exp(-16.0*abs(d));
     col *= 0.9 + 0.1*cos(150.0*d);

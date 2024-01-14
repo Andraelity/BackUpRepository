@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+// using EditorInteraction;
+
 
 // public class MyObject : ScriptableObject
 // {
@@ -10,7 +12,7 @@ using UnityEditor;
 // }
 
 
-[CustomEditor(typeof(Plane_Renderer))]
+// [CustomEditor(typeof(Plane_Renderer))]
 public class EditorScripting : Editor
 {
     // Start is called before the first frame update
@@ -65,6 +67,23 @@ public class EditorScripting : Editor
  //    	EditorGUILayout.EndHorizontal();
 
  //    }
+
+
+
+    // EditorInteractionClass.StickerType;
+    // EditorInteractionClass.BorderColor;
+    // EditorInteractionClass.BorderSizeOne;
+    // EditorInteractionClass.BorderSizeTwo;
+    // EditorInteractionClass.BorderBlurriness;
+    // EditorInteractionClass.RangeSTen_Ten0;
+    // EditorInteractionClass.RangeSTen_Ten1;
+    // EditorInteractionClass.RangeSTen_Ten2;
+    // EditorInteractionClass.RangeSTen_Ten3;
+    // EditorInteractionClass.RangeSOne_One0;
+    // EditorInteractionClass.RangeSOne_One1;
+    // EditorInteractionClass.RangeSOne_One2;
+    // EditorInteractionClass.RangeSOne_One3;
+
 
     float thumbnailWidth = 70;
     float thumbnailHeight = 70;
@@ -180,26 +199,27 @@ public class EditorScripting : Editor
 //     //         }
 
 
-    index = EditorGUILayout.Popup(index, options);
-
-    // MyObject obj = ScriptableObject.CreateInstance<MyObject>();
-    // SerializedObject serializedObject = new UnityEditor.SerializedObject(obj);
-    // SerializedProperty serializedPropertyMyInt = serializedObject.FindProperty("myInt");
-
-    // EditorGUILayout.BeginHorizontal();
-    // EditorGUILayout.PropertyField(serializedPropertyMyInt,  new GUIContent("GameObject"));
-    // EditorGUILayout.EndHorizontal();
-    scale = EditorGUILayout.Slider(scale, 1, 100);
+        index = EditorGUILayout.Popup(index, options);
     
-    EditorGUILayout.BeginHorizontal();
-    EditorGUILayout.LabelField("My Label");
-    textToSend = EditorGUILayout.TextField("");
-    EditorGUILayout.EndHorizontal();
+        // MyObject obj = ScriptableObject.CreateInstance<MyObject>();
+        // SerializedObject serializedObject = new UnityEditor.SerializedObject(obj);
+        // SerializedProperty serializedPropertyMyInt = serializedObject.FindProperty("myInt");
     
-
-    EditorGUILayout.LabelField(textToSend);
-
-    EditorGUILayout.ColorField("Color", valueColor);
+        // EditorGUILayout.BeginHorizontal();
+        // EditorGUILayout.PropertyField(serializedPropertyMyInt,  new GUIContent("GameObject"));
+        // EditorGUILayout.EndHorizontal();
+        
+        scale = EditorGUILayout.Slider(scale, 1, 100);
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("My Label");
+        textToSend = EditorGUILayout.TextField("");
+        EditorGUILayout.EndHorizontal();
+        
+    
+        EditorGUILayout.LabelField(textToSend);
+    
+        // EditorInteractionClass.BorderColor = EditorGUILayout.ColorField("ColorBorder", EditorInteractionClass.BorderColor);
 
     }
 

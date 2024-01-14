@@ -164,14 +164,11 @@ float sdRoundBox( in float2 p, in float2 b, float r )
 
     float4 col;
     
-    // background color
-    {
     	float d = sdRoundBox(p,bs,ra); 
     	col = (d>0.0) ? float4(0.9,0.6,0.3,1.0) : float4(0.65,0.85,1.0,1.0);
     	col *= 1.0 - exp2(-64.0*abs(d));
     	// col *= 0.8 + 0.2*cos(120.0*abs(d));
     	col = lerp( col, float4(1.0,1.0,1.0,1.0), 1.0-smoothstep(-0.005,0.005,abs(d)-0.005) );
-    }
     
    
 

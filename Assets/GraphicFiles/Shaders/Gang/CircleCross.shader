@@ -82,18 +82,18 @@
             /////////////////////////////////////////////////////////////////////////////////////////////
 
 
-float dot2( in float2 v ) { return dot(v,v); }
-float sdRoundedCross( in float2 p, in float h )
-{
-    float k = 0.5*(h+1.0/h);               // k should be const/precomputed at modeling time
-    
-    p = abs(p);
-    return ( p.x<1.0 && p.y<p.x*(k-h)+h ) ? 
-             k-sqrt(dot2(p - float2(1,k)))  :  // circular arc
-           sqrt(min(dot2(p - float2(0,h)),     // top corner
-                    dot2(p - float2(1,0))));   // right corner
-}
-
+			float dot2( in float2 v ) { return dot(v,v); }
+			float sdRoundedCross( in float2 p, in float h )
+			{
+			    float k = 0.5*(h+1.0/h);               // k should be const/precomputed at modeling time
+			    
+			    p = abs(p);
+			    return ( p.x<1.0 && p.y<p.x*(k-h)+h ) ? 
+			             k-sqrt(dot2(p - float2(1,k)))  :  // circular arc
+			           sqrt(min(dot2(p - float2(0,h)),     // top corner
+			                    dot2(p - float2(1,0))));   // right corner
+			}
+			
             fixed4 frag (pixel i) : SV_Target
 			{
 				
@@ -147,12 +147,12 @@ float sdRoundedCross( in float2 p, in float h )
 
 			    // animation
 			    p *= 1.35;    
-    // animate
-    float he = 0.501-0.499*cos(TIME*1.1+0.0);
-    float ra = 0.100+0.100*sin(TIME*1.7+2.0);
-
-    // compute
-	float d = sdRoundedCross( p, he ) - ra;
+			    // animate
+			    float he = 0.501-0.499*cos(TIME*1.1+0.0);
+			    float ra = 0.100+0.100*sin(TIME*1.7+2.0);
+			
+			    // compute
+				float d = sdRoundedCross( p, he ) - ra;
 
 				float4 col = float4(0.0,0.0,0.0, 1.0) - sign(d)*float4(col2, 1.0);
 				col *= 1.0 - exp(-48.0*abs(d));
