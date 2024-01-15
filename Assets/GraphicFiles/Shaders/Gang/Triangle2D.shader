@@ -177,14 +177,15 @@ float3 sdgTriangle( in float2 p, in float2 v0, in float2 v1, in float2 v2 )
 				// col *= 1.0 - exp(-48.0*abs(d));
 				// col *= 0.8 + 0.2*cos(120.0*d);
 				// col = lerp( col, float4(1.0, 1.0, 1.0, 1.0), 1.0-smoothstep(0.005,0.005,abs(d)) );
-	float2 v0 = cos( 0.5 * TIME + float2(0.0,2.0) + 0.0 );
-	float2 v1 = cos( 0.5 * TIME + float2(0.0,1.5) + 1.5 );
-	float2 v2 = cos( 0.5 * TIME + float2(0.0,3.0) + 4.0 );
-
-    // compute traingle SDF
-	float3 dg = sdgTriangle( p, v0, v1, v2 );
-    float d = dg.x;
-    float2 g = dg.yz;
+            
+            	float2 v0 = cos( 0.5 * TIME + float2(0.0,2.0) + 0.0 );
+              	float2 v1 = cos( 0.5 * TIME + float2(0.0,1.5) + 1.5 );
+            	float2 v2 = cos( 0.5 * TIME + float2(0.0,3.0) + 4.0 );
+            
+                // compute traingle SDF
+            	float3 dg = sdgTriangle( p, v0, v1, v2 );
+                float d = dg.x;
+                float2 g = dg.yz;
     
   
                 // coloring

@@ -79,7 +79,7 @@
             // Default 
             /////////////////////////////////////////////////////////////////////////////////////////////
 
-float3 sdgTrapezoid( in float2 p, in float ra, float rb, float he, out float2 ocl )
+float3 sdgTrapezoid( in float2 p, in float ra, float rb, float he )
 {
     float sx = (p.x<0.0)?-1.0:1.0;
     float sy = (p.y<0.0)?-1.0:1.0;
@@ -96,7 +96,6 @@ float3 sdgTrapezoid( in float2 p, in float ra, float rb, float he, out float2 oc
         float d = dot(q,q);
         float s = abs(p.y) - he;
         res = float4(d,q,s);
-        ocl = c;
     }
     
     // side edge
@@ -108,14 +107,15 @@ float3 sdgTrapezoid( in float2 p, in float ra, float rb, float he, out float2 oc
         float2  q = p - c;
         float d = dot(q,q);
         float s = w.x*k.y - w.y*k.x;
-        if( d<res.x ) { ocl = c; res.xyz = float3(d,q); }
+        if( d<res.x ) { 
+
+             res.xyz = float3(d,q); }
         if( s>res.w ) { res.w = s; }
     }
    
     // distance and sign
     float d = sqrt(res.x)*sign(res.w);
     res.y *= sx;
-    ocl.x *= sx;
     
     return float3(d,res.yz/d);
 }
@@ -174,7 +174,7 @@ float3 sdgTrapezoid( in float2 p, in float ra, float rb, float he, out float2 oc
         
                 // sdf(p) and gradient(sdf(p))
                 float2 kk;
-                float3  dg = sdgTrapezoid( p, ra, rb, he, kk );
+                float3  dg = sdgTrapezoid( p, ra, rb, he);
                 float d = dg.x;
                 float2 g = dg.yz;
         

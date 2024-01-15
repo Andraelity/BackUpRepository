@@ -173,17 +173,13 @@ float3 sdgTriangleIsosceles( in float2 p, in float2 q )
 				// col *= 0.8 + 0.2*cos(120.0*d);
 				// col = lerp( col, float4(1.0, 1.0, 1.0, 1.0), 1.0-smoothstep(0.005,0.005,abs(d)) );
 
-                p -= 0.3;
+                // p -= 0.3;
 
                 float2 si = float2(0.5,-0.5) + float2(0.3,-0.3)*cos( TIME + float2(0.0,1.57) + 0.0 );
         
-                // sdf(p) and gradient(sdf(p))
                 float3 dg = sdgTriangleIsosceles(p,si);
                 float d = dg.x;
-                float2 g = dg.yz;
-
     
-                // coloring
                 float4 col = float4(0.0,0.0,0.0, 0.0) - sign(d)*float4(backGround, 1.0);
                 col *= 1.0 - exp(-48.0*abs(d));
                 // col *= 0.8 + 0.2*cos(120.0*d);

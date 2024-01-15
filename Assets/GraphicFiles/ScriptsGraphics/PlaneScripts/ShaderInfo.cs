@@ -76,7 +76,15 @@ namespace StickerName
 				"Squircle",
 				"Stairs",
 				"StarN",
-				"Star"
+				"Star",
+				"Triangle2D",
+				"TriangleForm",
+				"TriangleIsosceles",
+				"TriangleRounded",
+				"Trapezoid",
+				"Tunnel",
+				"Vesica",
+				"VessicaSegment",
 
 			};
 

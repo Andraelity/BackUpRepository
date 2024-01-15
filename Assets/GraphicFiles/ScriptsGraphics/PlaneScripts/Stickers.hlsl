@@ -1636,7 +1636,355 @@ static float PaintSticker(in float stickerType, in float2 coordUV, in float moti
     }
 
 
-    // animate
+    if(stickerType == 41.0)
+    {
+
+        TIME = TIME + parameterOne2 + 41.0;
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+        /**/
+        /**/coordUV = coordUV * 2.0;
+        /**/
+        /**/    float2 firstParameter;
+        /**/    float2 secondParameter;
+        /**/    float2 thirdParameter;
+        /**/
+        /**/if(motionState == 0.0)
+        /**/{
+        /**/
+        /**/    coordUV = coordUV + float2(parameterOne0, parameterOne1);
+        // /**/    coordUV = coordUV * parameterOne2;
+        /**/
+        /**/    firstParameter = float2(parameterOne2, parameterOne3);
+        /**/    secondParameter = float2(parameterTen0, parameterTen1);
+        /**/    thirdParameter = float2(parameterTen2, parameterTen3);    
+        /**/
+        /**/}
+        /**/
+        /**/if(motionState == 1.0)
+        /**/{   
+        /**/        
+        /**/    coordUV = coordUV + float2(cos(TIME), sin(TIME));
+        /**/    coordUV = coordUV * (abs(sin(TIME * 0.8)) + 0.3);
+        /**/    firstParameter = cos(  2.0 * TIME + float2(0.0,2.0) + 0.0 );
+        /**/    secondParameter = cos( 2.0 * TIME + float2(0.0,1.5) + 1.5 );
+        /**/    thirdParameter = cos(  2.0 * TIME + float2(0.0,3.0) + 4.0 );
+        /**/
+        /**/}
+        /**/
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        float outSDF = SDFTriangle2D(coordUV, firstParameter, secondParameter, thirdParameter);
+
+        return outSDF;
+    }
+
+
+    if(stickerType == 42.0)
+    {
+
+        TIME = TIME + parameterOne2 + 42.0;
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+        /**/
+        /**/coordUV = coordUV * 4.0;
+        /**/
+        /**/    float2 firstParameter;
+        /**/    float2 secondParameter;
+        /**/    float2 thirdParameter;
+        /**/
+        /**/if(motionState == 0.0)
+        /**/{
+        /**/
+        /**/    coordUV = coordUV + float2(parameterOne0, parameterOne1);
+        // /**/    coordUV = coordUV * parameterOne2;
+        /**/
+        /**/    firstParameter = float2(parameterOne2, parameterOne3);
+        /**/    secondParameter = float2(parameterTen0, parameterTen1);
+        /**/    thirdParameter = float2(parameterTen2, parameterTen3);    
+        /**/
+        /**/}
+        /**/
+        /**/if(motionState == 1.0)
+        /**/{   
+        /**/        
+        /**/    coordUV = coordUV + float2(cos(TIME), sin(TIME));
+        /**/    coordUV = coordUV * (abs(sin(TIME * 0.8)) );
+        /**/    firstParameter = cos(  2.0 * TIME + float2(0.0,1.0) + 0.0 );
+        /**/    secondParameter = cos( 2.0 * TIME + float2(0.0,1.5) + 1.5 );
+        /**/    thirdParameter = cos(  2.0 * TIME + float2(0.0,3.0) + 2.4 );
+        /**/
+        /**/}
+        /**/
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        // The UV coordinates are not used as center. but instead as parameter of the Triangle.
+        float outSDF = SDFTriangleForm(coordUV, firstParameter, secondParameter, thirdParameter);
+
+        return outSDF;
+    }
+
+
+
+    if(stickerType == 43.0)
+    {
+
+        TIME = TIME + parameterOne2 + 43.0;
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+        /**/
+        /**/coordUV = coordUV * 2.0;
+        /**/
+        /**/    float2 firstParameter;
+        /**/
+        /**/if(motionState == 0.0)
+        /**/{
+        /**/
+        /**/    coordUV = coordUV + float2(parameterOne0, parameterOne1);
+        /**/    coordUV = coordUV * parameterOne2;
+        /**/
+        /**/    firstParameter = float2(parameterOne3, parameterTen0);
+        /**/
+        /**/}
+        /**/if(motionState == 1.0)
+        /**/{   
+        /**/        
+        /**/    coordUV = coordUV + float2(cos(TIME), sin(TIME));
+        /**/    coordUV = coordUV * (abs(sin(TIME * 0.8)) );
+        /**/    firstParameter = float2(0.5,-0.5) + float2(0.3,-0.3)*cos( TIME + float2(0.0,1.57) );
+        /**/
+        /**/}
+        /**/
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        float outSDF = SDFTriangleIsosceles(coordUV, firstParameter);
+
+        return outSDF;
+    }
+
+
+    if(stickerType == 44.0)
+    {
+
+        TIME = TIME + parameterOne2 + 44.0;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+        /**/
+        /**/coordUV = coordUV * 2.0;
+        /**/
+        /**/float2 firstParameter[3];
+        /**/
+        /**/
+        /**/if(motionState == 0.0)
+        /**/{
+        /**/
+        // /**/    coordUV = coordUV + float2(0, parameterOne1);
+        /**/    coordUV = coordUV * parameterOne1;
+        /**/
+        /**/    float2 v[3] = {
+        /**/    float2(parameterOne2, parameterOne3),
+        /**/    float2(parameterTen0, parameterTen1),
+        /**/    float2(parameterTen2, parameterTen3)};
+        /**/
+        /**/    firstParameter = v;
+        /**/    
+        /**/    
+        /**/
+        /**/}
+        /**/if(motionState == 1.0)
+        /**/{   
+        /**/        
+        /**/    coordUV = coordUV + float2(cos(TIME), sin(TIME));
+        /**/    coordUV = coordUV * (abs(sin(TIME * 0.8)) );
+        /**/    float2 v[3] = {
+        /**/    float2(-0.8,-0.3) + 0.5*cos( 0.5 * TIME + float2(0.0,1.9) + 4.0 ),
+        /**/    float2( 0.8,-0.3) + 0.5*cos( 0.7 * TIME + float2(0.0,1.7) + 2.0 ),
+        /**/    float2( 0.0, 0.3) + 0.5*cos( 0.9 * TIME + float2(0.0,1.3) + 1.0 ) };
+        /**/    firstParameter = v;
+        /**/    parameterOne0 = 0.1*(0.5+0.5*sin(TIME*1.2));
+        /**/        
+        /**/}
+        /**/
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        float outSDF = SDFTriangleRounded(coordUV, firstParameter) - parameterOne0;
+        
+        return outSDF;
+    }
+
+
+    if(stickerType == 45.0)
+    {
+
+        TIME = TIME + parameterOne2 + 45.0;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+        /**/
+        /**/coordUV = coordUV * 2.0;
+        /**/
+        /**/
+        /**/if(motionState == 0.0)
+        /**/{
+        /**/
+        /**/    coordUV = coordUV + float2(parameterOne0, parameterOne1);
+        /**/    coordUV = coordUV * parameterOne2;
+        /**/
+        /**/}
+        /**/if(motionState == 1.0)
+        /**/{   
+        /**/        
+        /**/    coordUV = coordUV + float2(cos(TIME), sin(TIME));
+        /**/    coordUV = coordUV * (abs(sin(TIME * 0.2)) );
+        /**/    parameterOne3 = 0.2 + 0.15 * sin(TIME*1.3+0.0);
+        /**/    parameterTen0 = 0.2 + 0.15 * sin(TIME*1.4+1.1);
+        /**/    parameterTen1 = 0.5 + 0.2 * sin(1.3*TIME);
+        /**/        
+        /**/}
+        /**/
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        float outSDF = SDFTrapezoid(coordUV, parameterOne3, parameterTen0, parameterTen1);
+        
+        return outSDF;
+    }
+
+
+    if(stickerType == 46.0)
+    {
+
+        TIME = TIME + parameterOne2 + 46.0;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+        /**/
+        /**/coordUV = coordUV * 2.0;
+        /**/
+        /**/float2 firstParameter;
+        /**/
+        /**/if(motionState == 0.0)
+        /**/{
+        /**/
+        /**/    coordUV = coordUV + float2(parameterOne0, parameterOne1);
+        /**/    coordUV = coordUV * parameterOne2;
+        /**/    firstParameter = float2(parameterOne3, parameterTen0);
+        /**/
+        /**/}
+        /**/if(motionState == 1.0)
+        /**/{   
+        /**/        
+        /**/    coordUV = coordUV + float2(cos(TIME), sin(TIME));
+        /**/    coordUV = coordUV * (abs(sin(TIME * 0.2)) );
+        /**/    firstParameter = 0.4 + 0.4*sin(TIME * float2(1.1,1.2) + float2(3.0,1.0));
+        /**/        
+        /**/}
+        /**/
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        float outSDF = SDFTunnel(coordUV, firstParameter);
+        
+        return outSDF;
+    }
+
+
+    if(stickerType == 47.0)
+    {
+
+        TIME = TIME + parameterOne2 + 47.0;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+        /**/
+        /**/coordUV = coordUV * 2.0;
+        /**/
+        /**/
+        /**/if(motionState == 0.0)
+        /**/{
+        /**/
+        /**/    coordUV = coordUV + float2(parameterOne0, parameterOne1);
+        /**/    coordUV = coordUV * parameterTen2;
+        // /**/    parameterOne3 = 0.5;//0.5*cos(1.0);
+        // /**/    parameterTen1 = 0.5;//0.2*sin(1.0); 
+        /**/    
+        /**/}
+        /**/if(motionState == 1.0)
+        /**/{   
+        /**/        
+        /**/    coordUV = coordUV + float2(cos(TIME), sin(TIME));
+        /**/    coordUV = coordUV * (abs(sin(TIME * 0.2)) );
+        /**/    parameterOne3 = 0.5*cos(TIME+12.0);
+        /**/    parameterTen1 = 0.2*sin(TIME*1.4); 
+        /**/
+        /**/}
+        /**/
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+
+
+        float outSDF = SDFVesica(coordUV, parameterTen0, parameterOne3) + parameterTen1; 
+        
+        return outSDF;
+
+    }
+
+
+
+    if(stickerType == 48.0)
+    {
+
+        TIME = TIME + parameterOne2 + 48.0;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+        /**/
+        /**/coordUV = coordUV * 2.0;
+        /**/
+        /**/float2 firstParameter;
+        /**/float2 secondParameter;
+        /**/
+        /**/if(motionState == 0.0)
+        /**/{
+        /**/
+        // /**/    coordUV = coordUV + float2(parameterOne0, parameterOne1);
+        /**/    coordUV = coordUV * parameterTen3;
+        /**/    firstParameter = float2(parameterOne0, parameterOne1);
+        /**/    secondParameter = float2(parameterOne2, parameterOne3);
+        /**/    
+        /**/}
+        /**/if(motionState == 1.0)
+        /**/{   
+        /**/        
+        /**/    coordUV = coordUV + float2(cos(TIME), sin(TIME));
+        /**/    coordUV = coordUV * (abs(sin(TIME * 0.2)) );
+        /**/
+        /**/    firstParameter = cos( TIME * 0.5 + float2(0.0,1.00) + 0.0 );
+        /**/    secondParameter = cos( TIME * 0.5 + float2(0.0,3.00) + 1.5 );
+        /**/    parameterTen0 = 0.40 * (0.5 + 0.495 * cos(TIME * 1.1+2.0));
+        /**/    parameterTen1 = 0.15 * (0.5 + 0.495 * cos(TIME * 1.3+1.0));
+        /**/    float2 value = smoothstep( -0.5, 0.5, sin(TIME + 0.1));
+        /**/    parameterTen1 *= 1.0 - value;
+        /**/}
+        /**/
+        ////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+
+
+        float outSDF = SDFVesicaSegment(coordUV, firstParameter, secondParameter, parameterTen0) - parameterTen1;
+        
+        return outSDF;
+    }
+
     
 
     return signFunctionNULL;

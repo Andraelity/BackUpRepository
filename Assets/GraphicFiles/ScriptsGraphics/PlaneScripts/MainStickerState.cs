@@ -225,7 +225,17 @@ namespace MainStickerState
 
 			if(information.StickerType == 40)
 	 		{
-	 			StickerType39(ref information);
+	 			StickerType40(ref information);
+	 		}
+
+			if(information.StickerType == 40)
+	 		{
+	 			StickerType41(ref information);
+	 		}
+
+			if(information.StickerType == 40)
+	 		{
+	 			StickerType42(ref information);
 	 		}
 
 	 	}
@@ -1046,6 +1056,165 @@ namespace MainStickerState
 	 	}
 
 
+
+		static public void StickerType41(ref ShaderInfo information)
+	 	{
+	 		string name = "Triangle2D";
+
+			information.MotionState = 1f;
+			information.BorderSizeOne = 1f;//
+			information.BorderSizeTwo = 10.0f;//
+			information.BorderBlurriness = 40f;
+
+			information.RangeSOne_One0 = 1.11f;
+			information.RangeSOne_One1 = 0.0f;
+			information.RangeSOne_One2 = 1.12f;
+			information.RangeSOne_One3 = 0.97f;
+			information.RangeSTen_Ten0 = 2.17f;
+			information.RangeSTen_Ten1 = -1.02f;
+			information.RangeSTen_Ten2 = -0.08f;
+			information.RangeSTen_Ten3 = -0.98f;
+	 	}
+
+
+		static public void StickerType42(ref ShaderInfo information)
+	 	{
+	 		string name = "TriangleForm";
+
+			information.MotionState = 1f;
+			information.BorderSizeOne = 1f;//
+			information.BorderSizeTwo = 10.0f;//
+			information.BorderBlurriness = 40f;
+
+			information.RangeSOne_One0 = 1.11f;
+			information.RangeSOne_One1 = 0.0f;
+			information.RangeSOne_One2 = 1.12f;
+			information.RangeSOne_One3 = 0.97f;
+			information.RangeSTen_Ten0 = 2.17f;
+			information.RangeSTen_Ten1 = -1.02f;
+			information.RangeSTen_Ten2 = -0.08f;
+			information.RangeSTen_Ten3 = -0.98f;
+	 	}
+
+
+		static public void StickerType43(ref ShaderInfo information)
+	 	{
+	 		string name = "TriangleIsosceles";
+
+			information.MotionState = 1f;
+			information.BorderSizeOne = 1f;//
+			information.BorderSizeTwo = 10.0f;//
+			information.BorderBlurriness = 40f;
+
+			information.RangeSOne_One0 = -0.4f;
+			information.RangeSOne_One1 = 0.27f;
+			information.RangeSOne_One2 = 0.44f;
+			information.RangeSOne_One3 = 1.17f;
+			information.RangeSTen_Ten0 = 2.17f;
+			information.RangeSTen_Ten1 = -1.02f;
+			information.RangeSTen_Ten2 = -0.08f;
+			information.RangeSTen_Ten3 = -0.98f;
+	 	}
+
+
+		static public void StickerType44(ref ShaderInfo information)
+	 	{
+	 		string name = "TriangleRounded";
+
+			information.MotionState = 1f;
+			information.BorderSizeOne = 1f;//
+			information.BorderSizeTwo = 10.0f;//
+			information.BorderBlurriness = 40f;
+
+			information.RangeSOne_One0 = 0.29f;
+			information.RangeSOne_One1 = 0.01f;
+			information.RangeSOne_One2 = 0.23f;
+			information.RangeSOne_One3 = 1.2f;
+			information.RangeSTen_Ten0 = 1.16f;
+			information.RangeSTen_Ten1 = -1.02f;
+			information.RangeSTen_Ten2 = -0.08f;
+			information.RangeSTen_Ten3 = -0.98f;
+	 	}
+
+
+		static public void StickerType45(ref ShaderInfo information)
+	 	{
+	 		string name = "Trapezoid";
+
+			information.MotionState = 1f;
+			information.BorderSizeOne = 1f;//
+			information.BorderSizeTwo = 10.0f;//
+			information.BorderBlurriness = 40f;
+
+			information.RangeSOne_One0 = 0.0f;
+			information.RangeSOne_One1 = 0.0f;
+			information.RangeSOne_One2 = 0.55f;
+			information.RangeSOne_One3 = 0.33f;
+			information.RangeSTen_Ten0 = 0.67f;
+			information.RangeSTen_Ten1 = 0.76f;
+			information.RangeSTen_Ten2 = -0.08f;
+			information.RangeSTen_Ten3 = -0.98f;
+	 	}
+
+
+		static public void StickerType46(ref ShaderInfo information)
+	 	{
+	 		string name = "Tunnel";
+
+			information.MotionState = 1f;
+			information.BorderSizeOne = 1f;//
+			information.BorderSizeTwo = 10.0f;//
+			information.BorderBlurriness = 40f;
+
+			information.RangeSOne_One0 = 0f;
+			information.RangeSOne_One1 = 0f;
+			information.RangeSOne_One2 = 1.0f;
+			information.RangeSOne_One3 = 1.0f;
+			information.RangeSTen_Ten0 = 1.0f;
+			information.RangeSTen_Ten1 = 1.0f;
+			information.RangeSTen_Ten2 = 1.0f;
+			information.RangeSTen_Ten3 = 1.0f;
+	 	}
+
+
+		static public void StickerType47(ref ShaderInfo information)
+	 	{
+	 		string name = "Vesica";
+
+			information.MotionState = 1f;
+			information.BorderSizeOne = 1f;//
+			information.BorderSizeTwo = 10.0f;//
+			information.BorderBlurriness = 40f;
+
+			information.RangeSOne_One0 = 0f;
+			information.RangeSOne_One1 = 0f;
+			information.RangeSOne_One2 = 1.0f;
+			information.RangeSOne_One3 = 0.5f;
+			information.RangeSTen_Ten0 = 1.32f;
+			information.RangeSTen_Ten1 = 0.5f;
+			information.RangeSTen_Ten2 = 1.0f;
+			information.RangeSTen_Ten3 = 1.0f;
+	 	}
+
+
+		static public void StickerType48(ref ShaderInfo information)
+	 	{
+	 		string name = "VesicaSegment";
+
+			information.MotionState = 1f;
+			information.BorderSizeOne = 1f;//
+			information.BorderSizeTwo = 10.0f;//
+			information.BorderBlurriness = 40f;
+
+			information.RangeSOne_One0 = 3.21f;
+			information.RangeSOne_One1 = -0.26f;
+			information.RangeSOne_One2 = -1.93f;
+			information.RangeSOne_One3 = 0.32f;
+			information.RangeSTen_Ten0 = 0.94f;
+			information.RangeSTen_Ten1 = 0.16f;
+			information.RangeSTen_Ten2 = 0.62f;
+			information.RangeSTen_Ten3 = 1.45f;
+	 	}
 	}
    
 }

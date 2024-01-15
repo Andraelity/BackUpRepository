@@ -68,14 +68,14 @@ public class Plane_Renderer_001 : MonoBehaviour
 	[Range(1f, 100f)]  public float BorderSizeOne = 1f;
 	[Range(1f, 100f)]  public float BorderSizeTwo = 1f;
 	[Range(0f, 152f)]  public float BorderBlurriness = 1f;
-	 public float RangeSOne_One0 = 1f; // [Range(-1f, 1f)]  
-	 public float RangeSOne_One1 = 1f; // [Range(-1f, 1f)]  
-	 public float RangeSOne_One2 = 1f; // [Range(-1f, 1f)]  
-	 public float RangeSOne_One3 = 1f; // [Range(-1f, 1f)]  
-	 public float RangeSTen_Ten0 = 1f; // [Range(-10f, 10f)]
-	 public float RangeSTen_Ten1 = 1f; // [Range(-10f, 10f)]
-	 public float RangeSTen_Ten2 = 1f; // [Range(-10f, 10f)]
-	 public float RangeSTen_Ten3 = 1f; // [Range(-10f, 10f)]
+	public float RangeSOne_One0 = 1f; // [Range(-1f, 1f)]  
+	public float RangeSOne_One1 = 1f; // [Range(-1f, 1f)]  
+	public float RangeSOne_One2 = 1f; // [Range(-1f, 1f)]  
+	public float RangeSOne_One3 = 1f; // [Range(-1f, 1f)]  
+	public float RangeSTen_Ten0 = 1f; // [Range(-10f, 10f)]
+	public float RangeSTen_Ten1 = 1f; // [Range(-10f, 10f)]
+	public float RangeSTen_Ten2 = 1f; // [Range(-10f, 10f)]
+	public float RangeSTen_Ten3 = 1f; // [Range(-10f, 10f)]
 
 /////////////////////////////////////////////////////////////
 //////// update information
@@ -163,6 +163,8 @@ public class Plane_Renderer_001 : MonoBehaviour
 
 		// renderer.material.SetFloat("_FloatNumber", 1.0f);
 
+
+		Debug.Log(gameObject.GetInstanceID());
     }
 
 

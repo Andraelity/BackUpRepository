@@ -1007,3 +1007,229 @@ static float SDFStar(in float2 p, in float r, in float rf)
     float h = clamp( dot(p,ba)/dot(ba,ba), 0.0, r );
     return length(p-ba*h) * sign(p.y*ba.x-p.x*ba.y);
 }
+
+static float SDFTriangle2D( in float2 p, in float2 v0, in float2 v1, in float2 v2 )
+{
+    float gs = cro(v0-v2,v1-v0);
+    float4 res;
+    
+    // edge 0
+    {
+    float2  e = v1-v0;
+    float2  w = p-v0;
+    float2  q = w-e*clamp(dot(w,e)/dot(e,e),0.0,1.0);
+    float d = dot(q,q);
+    float s = gs*cro(w,e);
+    res = float4(d,q,s);
+    }
+    
+    // edge 1
+    {
+    float2  e = v2-v1;
+    float2  w = p-v1;
+    float2  q = w-e*clamp(dot(w,e)/dot(e,e),0.0,1.0);
+    float d = dot(q,q);
+    float s = gs*cro(w,e);
+    res = float4( (d<res.x) ? float3(d,q) : res.xyz,
+                  (s>res.w) ?        s    : res.w );
+    }
+    
+    // edge 2
+    {
+    float2  e = v0-v2;
+    float2  w = p-v2;
+    float2  q = w-e*clamp(dot(w,e)/dot(e,e),0.0,1.0);
+    float d = dot(q,q);
+    float s = gs*cro(w,e);
+    res = float4( (d<res.x) ? float3(d,q) : res.xyz,
+                (s>res.w) ?      s    : res.w );
+    }
+    
+    // distance and sign
+    float d = sqrt(res.x)*sign(res.w);
+    
+    return float(d);
+
+}
+
+static float SDFTriangleForm( in float2 p0, in float2 p1, in float2 p2, in float2 p )
+{
+    float2 e0 = p1-p0;
+    float2 v0 = p-p0;
+    float2 e1 = p2-p1;
+    float2 v1 = p-p1;
+    float2 e2 = p0-p2;
+    float2 v2 = p-p2;
+
+    float2 pq0 = v0 - e0*clamp( dot(v0,e0)/dot2(e0), 0.0, 1.0 );
+    float2 pq1 = v1 - e1*clamp( dot(v1,e1)/dot2(e1), 0.0, 1.0 );
+    float2 pq2 = v2 - e2*clamp( dot(v2,e2)/dot2(e2), 0.0, 1.0 );
+    
+    float2 d = min( min( float2( dot2( pq0 ), cro(v0,e0) ),
+                         float2( dot2( pq1 ), cro(v1,e1) )),
+                         float2( dot2( pq2 ), cro(v2,e2) ));
+
+    return -sqrt(d.x)*sign(d.y);
+}
+
+
+
+static float SDFTriangleIsosceles( in float2 p, in float2 q )
+{
+    float w = sign(p.x);
+    p.x = abs(p.x);
+    float2 a = p - q * clamp( dot(p,q)/dot(q,q), 0.0, 1.0 );
+    float2 b = p - q * float2( clamp( p.x/q.x, 0.0, 1.0 ), 1.0 );
+    float k = sign( q.y );
+    float l1 = dot(a,a);
+    float l2 = dot(b,b);
+    float d = sqrt((l1<l2)?l1:l2);
+    float2  g =      (l1<l2)? a: b;
+    float s = max( k*(p.x*q.y-p.y*q.x),k*(p.y-q.y)  );
+    return float(d) * sign(s);
+}
+
+
+
+static float SDFTriangleRounded( in float2 p, in float2 v[3] )
+{
+    float gs = cro(v[0]-v[2],v[1]-v[0]);
+    float4 res;
+    
+    // edge 0
+    {
+    float2  e = v[1]-v[0];
+    float2  w = p-v[0];
+    float2  q = w-e*clamp(dot(w,e)/dot(e,e),0.0,1.0);
+    float d = dot(q,q);
+    float s = gs*cro(w,e);
+    res = float4(d,q,s);
+    }
+    
+    // edge 1
+    {
+    float2  e = v[2]-v[1];
+    float2  w = p-v[1];
+    float2  q = w-e*clamp(dot(w,e)/dot(e,e),0.0,1.0);
+    float d = dot(q,q);
+    float s = gs*cro(w,e);
+    res = float4( (d<res.x) ? float3(d,q) : res.xyz,
+                (s>res.w) ?      s    : res.w );
+    }
+    
+    // edge 2
+    {
+    float2  e = v[0]-v[2];
+    float2  w = p-v[2];
+    float2  q = w-e*clamp(dot(w,e)/dot(e,e),0.0,1.0);
+    float d = dot(q,q);
+    float s = gs*cro(w,e);
+    res = float4( (d<res.x) ? float3(d,q) : res.xyz,
+                  (s>res.w) ?        s    : res.w );
+    }
+    
+    // distance and sign
+    float d = sqrt(res.x)*sign(res.w);
+    
+    return float(d);
+
+}
+
+
+
+static float SDFTrapezoid( in float2 p, in float ra, float rb, float he )
+{
+    float sx = (p.x<0.0)?-1.0:1.0;
+    float sy = (p.y<0.0)?-1.0:1.0;
+
+    p.x = abs(p.x);
+
+    float4 res;
+    
+    // bottom and top edges
+    {
+        float h = min(p.x,(p.y<0.0)?ra:rb);
+        float2  c = float2(h,sy*he);
+        float2  q = p - c;
+        float d = dot(q,q);
+        float s = abs(p.y) - he;
+        res = float4(d,q,s);
+    }
+    
+    // side edge
+    {
+        float2  k = float2(rb-ra,2.0*he);
+        float2  w = p - float2(ra, -he);
+        float h = clamp(dot(w,k)/dot(k,k),0.0,1.0);
+        float2  c = float2(ra,-he) + h*k;
+        float2  q = p - c;
+        float d = dot(q,q);
+        float s = w.x*k.y - w.y*k.x;
+        if( d<res.x ) { 
+
+             res.xyz = float3(d,q); }
+        if( s>res.w ) { res.w = s; }
+    }
+   
+    // distance and sign
+    float d = sqrt(res.x)*sign(res.w);
+    res.y *= sx;
+    return float(d);
+}
+
+
+static float SDFTunnel( in float2 p, in float2 wh )
+{
+    p.x = abs(p.x); p.y = -p.y;
+    float2 q = p - wh;
+
+    float d1 = dot2(float2(max(q.x,0.0),q.y));
+    q.x = (p.y>0.0) ? q.x : length(p)-wh.x;
+    float d2 = dot2(float2(q.x,max(q.y,0.0)));
+    float d = sqrt( min(d1,d2) );
+    
+    return (max(q.x,q.y)<0.0) ? -d : d;
+}
+
+
+static float SDFVesica(float2 p, float r, float d)
+{
+    float2 s = sign(p); p = abs(p);
+
+    float b = sqrt(r*r-d*d);  // can delay this sqrt by rewriting the comparison
+    
+    float3 res;
+    if( (p.y-b)*d > p.x*b )
+    {
+        float2  q = float2(p.x,p.y-b);
+        float l = length(q)*sign(d);
+        res = float3( l, q/l );
+    }
+    else
+    {
+        float2  q = float2(p.x+d,p.y);
+        float l = length(q);
+        res = float3( l-r, q/l );
+    }
+    return float(res.x);
+}
+
+static float SDFVesicaSegment( in float2 p, in float2 a, in float2 b, float w )
+{
+    // shape constants
+    float r = 0.5*length(b-a);
+    float d = 0.5*(r*r-w*w)/w;
+    
+    // center, orient and mirror
+    float2 v = (b-a)/r;
+    float2 c = (b+a)*0.5;
+
+    float2x2 mat2 = {v.y,v.x,-v.x,v.y};
+    float2 vat = mul(mat2,(p-c));
+    float2 q = 0.5*abs(vat);
+    // feature selection (vertex or body)
+    float3 h = (r*q.x < d*(q.y-r)) ? float3(0.0,r,0.0) : float3(-d,0.0,d+w);
+ 
+    // distance
+    return length(q-h.xy) - h.z;
+}
