@@ -53,7 +53,31 @@ namespace StickerName
 				"Egg",
 				"EllipseHorizontal",
 				"Gradient2D",
-				"Heart"
+				"Heart",
+				"Hexagon",
+				"Horseshoe",
+				"Hyperbola",
+				"Joint2DSphere",
+				"Joint2DFlat",
+				"MinusShape",
+				"Moon",
+				"OrientedBox",
+				"Parabola",
+				"Parallelogram",
+				"ParallelogramRounded",
+				"Pie",
+				"QuadParameter",
+				"QuadraticCircle",
+				"Rhombus",
+				"Ring",
+				"RoundedBox",
+				"RoundedX",
+				"Segment",
+				"Squircle",
+				"Stairs",
+				"StarN",
+				"Star"
+
 			};
 
 		}

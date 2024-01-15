@@ -84,29 +84,72 @@
 
 //-----------------
 
-#define opSubtract(p,A,B)\
-    /* regular subtraction */ \
-    max(A.x,-B.x);\
-    if( d>0.0 )\
-    {\
-        float2 op = p;\
-        /* find closest intersection of the two shapes */ \
-        /* by recursively averaging the two closest points */ \
-        for( int i=0; i<512; i++ ) \
-        { \
-            float d1=A.x; float2 g1=A.yz; \
-            float d2=B.x; float2 g2=B.yz; \
-            if( max(abs(d1),abs(d2))<0.001 ) break; \
-            p -= 0.5*(d1*g1 + d2*g2); \
-        } \
-        /* distance to closest intersection*/ \
-        float d3 = length(p-op);\
-        /* decide whether we should update distance */ \
-        float2  g1 = A.yz;\
-        float2  g2 = B.yz;\
-        float no = cro(g1,g2);\
-        if( cro(op-p,g1)*no>0.0 && cro(op-p,g2)*no>0.0) d = d3;\
-    }
+// #define opSubtract(p,A,B)\
+//     /* regular subtraction */ \
+//     max(A.x,-B.x);\
+//     if( d>0.0 )\
+//     {\
+//         float2 op = p;\
+//         for( int i=0; i<512; i++ ) \
+//         { \
+//             float d1=A.x; float2 g1=A.yz; \
+//             float d2=B.x; float2 g2=B.yz; \
+//             if( max(abs(d1),abs(d2))<0.001 ) break; \
+//             p -= 0.5*(d1*g1 + d2*g2); \
+//         } \
+//         /* distance to closest intersection*/ \
+//         float d3 = length(p-op);\
+//         /* decide whether we should update distance */ \
+//         float2  g1 = A.yz;\
+//         float2  g2 = B.yz;\
+//         float no = cro(g1,g2);\
+//         if( cro(op-p,g1)*no>0.0 && cro(op-p,g2)*no>0.0) d = d3;\
+//     }
+    
+
+
+// float3 sdgCircle( in float2 p, in float2 c, in float r ) 
+// {
+//     p -= c;
+//     float l = length(p);
+//     return float3( l-r, p/l );
+// }
+
+// // // SDFs from iquilezles.org/articles/distfunctions2d
+// // // .x = f(p), .yz = ∇f(p) with ‖∇f(p)‖ = 1
+// float3 sdgBox( in float2 p, in float2 b )
+// {
+//     float2 w = abs(p)-b;
+//     float2 s = float2(p.x<0.0?-1:1,p.y<0.0?-1:1);
+    
+//     float g = max(w.x,w.y);
+// 	float2  q = max(w,0.0);
+//     float l = length(q);
+    
+//     return float3(   (g>0.0)?l: g,
+//                 s*((g>0.0)?q/l : ((w.x>w.y)?float2(1,0):float2(0,1))));
+// }
+
+
+// float cro( float2 a, float2 b ) { return a.x*b.y - a.y*b.x; }
+
+
+
+// float map( in float2 p )
+// {
+//     float2 off = 0.1*sin(TIME + float2(0.0,2.0));
+
+//     float d = opSubtract( p, sdgBox(p, float2(0.3,0.6)), 
+//                              sdgCircle(p, float2(0.0,0.2)+off,0.4) );
+//     return d;
+// }
+
+
+
+    // float A = float3(T.x,0.0, 0.0);\
+    // float B = float3(M.x,0.0, 0.0);\
+
+#define opSubtract(A,B) max(A,-B);
     
 
 
@@ -117,34 +160,33 @@ float3 sdgCircle( in float2 p, in float2 c, in float r )
     return float3( l-r, p/l );
 }
 
-// // SDFs from iquilezles.org/articles/distfunctions2d
-// // .x = f(p), .yz = ∇f(p) with ‖∇f(p)‖ = 1
 float3 sdgBox( in float2 p, in float2 b )
 {
     float2 w = abs(p)-b;
     float2 s = float2(p.x<0.0?-1:1,p.y<0.0?-1:1);
     
     float g = max(w.x,w.y);
-	float2  q = max(w,0.0);
+    float2  q = max(w,0.0);
     float l = length(q);
     
     return float3(   (g>0.0)?l: g,
                 s*((g>0.0)?q/l : ((w.x>w.y)?float2(1,0):float2(0,1))));
 }
 
-
-float cro( float2 a, float2 b ) { return a.x*b.y - a.y*b.x; }
-
-
-
 float map( in float2 p )
 {
-    float2 off = 0.1*sin(TIME + float2(0.0,2.0));
+    float2 off = 0.5 * sin(TIME);
+    float A = sdgBox(p, float2(0.3,0.6)).x;
+    float B = sdgCircle(p, float2(0.0,0.2)+ off, 0.4).x;
 
-    float d = opSubtract( p, sdgBox(p, float2(0.3,0.6)), 
-                             sdgCircle(p, float2(0.0,0.2)+off,0.4) );
+    float d = opSubtract(A,B);
+                             
     return d;
 }
+
+
+
+
 
 // float2 gra( in float2 p )
 // {
@@ -197,7 +239,7 @@ float map( in float2 p )
                 colBase = 0.0;
                 //////////////////////////////////////////////////////////////////////////////////////////////
                 
-				  // normalized pixel coordinates
+				// normalized pixel coordinates
     float2 p = coordinate;
     
     // distance

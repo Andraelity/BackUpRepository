@@ -92,7 +92,7 @@ float3 trianglesGrid(float2 p )
 
 }
 
-float3 sdMoon(float2 p, float d, float ra, float rb )
+float sdMoon(float2 p, float d, float ra, float rb )
 {
     float s = sign(p.y);
     p.y = abs(p.y);
@@ -112,7 +112,7 @@ float3 sdMoon(float2 p, float d, float ra, float rb )
     float l2 = length(w2); float d2 = rb-l2; 
     w2.y *= s;
     
-    return (d1>d2) ? float3(d1,w1/l1) : float3(d2,-w2/l2);
+    return (d1>d2) ? float(d1) : float(d2);
 }
 
 
@@ -167,14 +167,13 @@ float3 sdMoon(float2 p, float d, float ra, float rb )
 
            
                 // animate
+                float di = 1.2*cos(TIME+3.9);
                 float ra = 0.9;
                 float rb = 0.7;
-                float di = 1.2*cos(TIME+3.9);
                 
                 // sdf
-                float3  dg = sdMoon( p, di, ra, rb );
-                float d = dg.x;
-                float2  g = dg.yz;
+                float  d = sdMoon( p, di, ra, rb );
+                
         
     
                 // central differenes based gradient, for comparison

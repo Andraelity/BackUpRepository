@@ -158,7 +158,7 @@ float3 sdgHexagon( in float2 p, in float r )
     
 	// coloring
     float3 col = (d>0.0) ? float3(0.9,0.6,0.3) : float3(0.4,0.7,0.85);
-    col *= 1.0 + float3(0.5*g,0.0);
+    // col *= 1.0 + float3(0.5*g,0.0);
   //col = vec3(0.5+0.5*g,1.0);
     col *= 1.0 - 0.5*exp(-16.0*abs(d));
 	col *= 0.9 + 0.1*cos(150.0*d);

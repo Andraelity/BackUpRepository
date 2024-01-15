@@ -58,6 +58,10 @@ public class Plane_Renderer_001 : MonoBehaviour
 
 
 	public Color BorderColor = Color.green;
+ 	// [Header("EditMode")]
+ 	[Header("Set active to Edit SHADER")]
+	public bool EditValue = false;
+
  	[Header("StickerType")]
 	[Range(1, 80)]     public int StickerType = 1;
 	[Range(0, 1)]	   public int MotionState = 1;
@@ -243,40 +247,41 @@ public class Plane_Renderer_001 : MonoBehaviour
     void Update()
     {
 		// SetInitialValuesRef(ref variableShaderInfo);
-
-		variableShaderInfo = new ShaderInfo
-		{
-			StickerType = StickerType,
-			MotionState = MotionState,
-			BorderColor = BorderColor,
-			BorderSizeOne = BorderSizeOne, 
-			BorderSizeTwo = BorderSizeTwo, 
-			BorderBlurriness = BorderBlurriness,
-
-
-			RangeSOne_One0 = RangeSOne_One0,
-			RangeSOne_One1 = RangeSOne_One1,
-			RangeSOne_One2 = RangeSOne_One2,
-			RangeSOne_One3 = RangeSOne_One3,
-
-			RangeSTen_Ten0 = RangeSTen_Ten0,
-			RangeSTen_Ten1 = RangeSTen_Ten1,
-			RangeSTen_Ten2 = RangeSTen_Ten2,
-			RangeSTen_Ten3 = RangeSTen_Ten3
-		};
-
-		_materialPropertyBlock = SetMaterialPropertyBlock();
-
-		renderer.SetPropertyBlock(_materialPropertyBlock);
-
-
-		if(((int)variableShaderInfo.StickerType )!= currentStickerValue)
-		{
-
-			SetInitialValuesRef(ref variableShaderInfo);
-			currentStickerValue = (int) variableShaderInfo.StickerType;
+    	if(EditValue == true)
+    	{
+			variableShaderInfo = new ShaderInfo
+			{
+				StickerType = StickerType,
+				MotionState = MotionState,
+				BorderColor = BorderColor,
+				BorderSizeOne = BorderSizeOne, 
+				BorderSizeTwo = BorderSizeTwo, 
+				BorderBlurriness = BorderBlurriness,
+	
+	
+				RangeSOne_One0 = RangeSOne_One0,
+				RangeSOne_One1 = RangeSOne_One1,
+				RangeSOne_One2 = RangeSOne_One2,
+				RangeSOne_One3 = RangeSOne_One3,
+	
+				RangeSTen_Ten0 = RangeSTen_Ten0,
+				RangeSTen_Ten1 = RangeSTen_Ten1,
+				RangeSTen_Ten2 = RangeSTen_Ten2,
+				RangeSTen_Ten3 = RangeSTen_Ten3
+			};
+	
+			_materialPropertyBlock = SetMaterialPropertyBlock();
+	
+			renderer.SetPropertyBlock(_materialPropertyBlock);
+	
+	
+			if(((int)variableShaderInfo.StickerType )!= currentStickerValue)
+			{
+	
+				SetInitialValuesRef(ref variableShaderInfo);
+				currentStickerValue = (int) variableShaderInfo.StickerType;
+			}
 		}
-
 
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -285,19 +290,19 @@ public class Plane_Renderer_001 : MonoBehaviour
 
 		// Shader.SetGlobalVector("_ValueFloat", new Vector3(1.0f, 1.0f, 1.0f));
 		// Shader.SetGlobalFloat("_ValueFloat", 1.0f);
-		Shader.SetGlobalVector("_ValueVector", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+		// Shader.SetGlobalVector("_ValueVector", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
-		Vector4 globalShaderTime = Shader.GetGlobalVector("_Time");
+		// Vector4 globalShaderTime = Shader.GetGlobalVector("_Time");
 
 
 		// print(Application.dataPath);
 		// print(Application.persistentDataPath);
 
        	// Debug.Log("shader timeV: " + globalShaderTime + " shader _Time.y: " + globalShaderTime.y + " timeSinceLevelLoad:" + Time.timeSinceLevelLoad);
-		Vector4 globalShaderValueTime = new Vector4(1.0f, globalShaderTime.y, globalShaderTime.z, globalShaderTime.w);
+		// Vector4 globalShaderValueTime = new Vector4(1.0f, globalShaderTime.y, globalShaderTime.z, globalShaderTime.w);
 
 
-		Vector4 globalVector = new Vector4(0.5f, 1.0f, 1.0f, 1.0f);
+		// Vector4 globalVector = new Vector4(0.5f, 1.0f, 1.0f, 1.0f);
 
 		// Shader.SetGlobalVector("_VectorVariable", globalVector);
 		// Shader.SetGlobalFloat("_FloatVariable", 0.5f);

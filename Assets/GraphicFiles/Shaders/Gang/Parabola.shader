@@ -92,7 +92,7 @@ float3 trianglesGrid(float2 p )
 
 }
 
-float3 sdParabola( in float2 pos, in float k )
+float sdParabola( in float2 pos, in float k )
 {
     float s = sign(pos.x);
     pos.x = abs(pos.x);
@@ -113,7 +113,7 @@ float3 sdParabola( in float2 pos, in float k )
     float z = (pos.x-x<0.0)?-1.0:1.0;
     float2 w = pos-float2(x,k*x*x); float l = length(w); w.x*=s;
     
-    return z * float3(l, w/l );
+    return z * float(l);
 }
 
 
@@ -174,29 +174,31 @@ float3 sdParabola( in float2 pos, in float k )
                 float pk =  8.0 + 7.5 * cos(t * 1.3 + 3.5); // width
                 
                 // sdf
-                float3  dg = sdParabola( p - float2(px,py), pk );
-                float d = dg.x;
-                float2 g = dg.yz;
+                float  d = sdParabola( p - float2(px,py), pk );
         
-    // central differenes based gradient, for comparison
-    //g = vec2(dFdx(d),dFdy(d))/(2.0/iResolution.y);
+                // central differenes based gradient, for comparison
+                //g = vec2(dFdx(d),dFdy(d))/(2.0/iResolution.y);
     
                 // central differenes based gradient, for comparison
                 //g = vec2(dFdx(d),dFdy(d))/(2.0/iResolution.y);
                 
                 // float4 col = float4(0.0,0.0,0.0, 1.0) - sign(d)*float4(col2, 1.0);
-                float4 col = (d>0.0) ? float4(0.0,0.0,0.0,0.0) : float4(backGround, 1.0); //vec3(0.4,0.7,0.85);
+
+                float4 col = (d>0.0) ? float4(0.0,0.0,0.0,0.0) : float4(backGround, 1.0); 
+                //vec3(0.4,0.7,0.85);
 
                 col *= 1.0 - exp(-48.0*abs(d));
+
                 // col *= 0.8 + 0.2*cos(120.0*d);
+
                 col = lerp( col, float4(1.0, 1.0, 1.0, 1.0), 1.0-smoothstep(0.009,0.009,abs(d)) );
                 
-    // if(col.z == 0.0)
-    // {
-    // 	col = float4(col2, 1.0);
-    // }
+                // if(col.z == 0.0)
+                // {
+                // 	col = float4(col2, 1.0);
+                // }
 
-                    return float4(col);
+                return float4(col);
 					// return float4(col.xyz, (col.x + col.y + col.z )/3.0);
 
 
@@ -215,6 +217,7 @@ float3 sdParabola( in float2 pos, in float k )
     //             if (lenghtRadio < radio)
     //             {
     //             	return float4(1, 0.0, 0.0, 1.0);
+
     //             }
     //             else
     //             {

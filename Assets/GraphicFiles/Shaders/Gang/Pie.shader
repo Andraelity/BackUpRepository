@@ -147,7 +147,7 @@ float3 sdgPie( in float2 p, in float2 c, in float r )
 			    // animation
                 // animate
              // animation
-                float t =            3.14*(0.5+0.5*cos(TIME * 0.52));
+                float t = 3.14*(0.5+0.5*cos(TIME * 0.52));
                 float2  w = float2(0.50,0.25)*(0.5+0.5*cos(TIME * float2(1.1,1.3) + float2(0.0,2.0)));
         
                 // sdf(p) and gradient(sdf(p))

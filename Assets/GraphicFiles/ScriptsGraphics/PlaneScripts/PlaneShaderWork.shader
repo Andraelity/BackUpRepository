@@ -117,6 +117,7 @@
 			#define Number _FloatNumber
 			#define NumberOne _FloatVariable
 
+			#include "SDfs.hlsl"
 			#include "Stickers.hlsl"
 
 			float3 trianglesGrid(float2 p)

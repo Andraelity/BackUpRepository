@@ -82,7 +82,7 @@
             /////////////////////////////////////////////////////////////////////////////////////////////
 
 
-float3 sdgParallelogram( in float2 p, float wi, float he, float sk )
+float sdgParallelogram( in float2 p, float wi, float he, float sk )
 {
     float2  e = float2(sk,he);
     float v = 1.0;
@@ -104,7 +104,7 @@ float3 sdgParallelogram( in float2 p, float wi, float he, float sk )
     // signed distance
     d = sqrt(dsg.x)*sign(dsg.w);
     // and gradient
-    return float3(d,dsg.yz/d); 
+    return float(d);
 }
 
 

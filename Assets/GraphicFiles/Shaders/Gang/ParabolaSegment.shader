@@ -93,7 +93,7 @@
 // 1.39 = wi
 // 0.75 = he
 
-float3 sdParabola( in float2 pos, in float wi, in float he )
+float sdParabola( in float2 pos, in float wi, in float he )
 {
     float s = sign(pos.x);
     pos.x = abs(pos.x);
@@ -120,7 +120,7 @@ float3 sdParabola( in float2 pos, in float wi, in float he )
     float2 w = pos - float2(x,he-x*x/ik);
     float d = length(w);
     w.x *= s;
-    return float3(d,w/d);
+    return float(d);
 }
 
 
@@ -187,16 +187,14 @@ float3 sdParabola( in float2 pos, in float wi, in float he )
     float h = 0.4 + 0.35 * 1.0;//sin( * 0.53 + 2.0);
     
     // sdf
-    float3  dg = sdParabola( p, w, h );
-    float d = dg.x;
-    float2 g = dg.yz;
+    float d = sdParabola( p, w, h );
         
     // central differenes based gradient, for comparison
     //g = vec2(dFdx(d),dFdy(d))/(2.0/iResolution.y);
     
 	// coloring
     float3 col = (d>0.0) ? float3(0.9,0.6,0.3) : float3(0.4,0.7,0.85);
-    col *= 1.0 + float3(0.5*g,0.0);
+    // col *= 1.0 + float3(0.5*g,0.0);
     col *= 1.0 - 0.5*exp(-16.0*abs(d));
 	col *= 0.9 + 0.1*cos(150.0*d);
 	col = lerp( col, float3(1.0,1.0,1.0), 1.0-smoothstep(0.0,0.01,abs(d)) );

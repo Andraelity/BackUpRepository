@@ -200,7 +200,7 @@ float3 sdgQuad( in float2 p, in float2 v[4] )
         // sdf(p) and gradient(sdf(p))
         float3  dg = sdgQuad(p,v);
         float d = dg.x-ra;
-        float2  g = dg.yz;
+        // float2  g = dg.yz;
 
   
                 // coloring

@@ -107,7 +107,7 @@ float sdSegment( in float2 p, in float2 a, in float2 b, in float th )
     float2 ba = b-a;
     float2 pa = p-a;
     float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
-    float2  q = pa-h*ba;
+    float2  q = pa - (h * ba);
     return length(q) - th;
 }
 
@@ -153,7 +153,7 @@ float sdSegment( in float2 p, in float2 a, in float2 b, in float th )
                 colBase = 0.0;
                 //////////////////////////////////////////////////////////////////////////////////////////////
                 
-				  // normalized pixel coordinates
+	// normalized pixel coordinates
     // float2 p = coordinate;
     
     // distance
@@ -167,19 +167,23 @@ float sdSegment( in float2 p, in float2 a, in float2 b, in float th )
 
 
     float px = 1.0;
-    float2 p = coordinate;
+    float2 p = coordinate * 5.0;
 
 
-    float2 v1 = 0.7*cos(sin(TIME) *0.5 * float2(1.3,1.0) + float2(2,4) );
-    float2 v2 = 0.7*cos(sin(TIME) *0.5 * float2(0.9,1.2) + float2(1,5) );
-    float th = 1.0*(0.7+0.3*sin(1.2+2.0));
+    // float2 v1 = 1.0*cos(sin(PI) *0.5 * float2(1.3,20.0) + float2(30,10) );
+    float2 v1 = float2(0.5, 1.0);
+    float2 v2 = float2(-5.0, -2.0);
+    // float th = 1.0*(0.7+0.3*sin(1.2+2.0));
+
+    float th = abs(sin(TIME));
 
 
     float4 col;
     
     // background color
-    
+    // cloSegment
     float d = sdSegment(p,v1,v2,th);
+    // float d = cloSegment(p,v1,v2,th).x;
     col = (d>0.0) ? float4(1.0, 1.0 ,1.0, 0.0) : float4(0.65,0.85,1.0, 0.0);
     col *= 1.0 + exp2(-36.0*abs(d));
     //col *= 0.8 + 0.2*cos(120.0*abs(d));
