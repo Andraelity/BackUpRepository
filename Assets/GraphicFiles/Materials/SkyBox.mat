@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SkyBox
-  m_Shader: {fileID: 108, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 6cf05191e7479704681b7760b1b88f50, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -106,6 +106,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BorderBlurriness: 1
+    - _BorderSizeOne: 1
+    - _BorderSizeTwo: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -120,16 +123,28 @@ Material:
     - _Metallic: 0
     - _MirrorOnBack: 0
     - _Mode: 0
+    - _MotionState: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _RangeSOne_One0: 1
+    - _RangeSOne_One1: 1
+    - _RangeSOne_One2: 1
+    - _RangeSOne_One3: 1
+    - _RangeSTen_Ten0: 1
+    - _RangeSTen_Ten1: 1
+    - _RangeSTen_Ten2: 1
+    - _RangeSTen_Ten3: 1
     - _Rotation: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _StickerType: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _BorderColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorOperation: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []

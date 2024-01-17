@@ -1,4 +1,4 @@
-﻿Shader "Arc1"
+﻿Shader "Arc"
 {
 	Properties
 	{
