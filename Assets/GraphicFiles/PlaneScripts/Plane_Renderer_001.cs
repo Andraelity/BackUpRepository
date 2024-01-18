@@ -34,6 +34,7 @@ public class Plane_Renderer_001 : MonoBehaviour
 	private Renderer renderer;
 
 	private Material material;
+	private Material material2;
 
 	private Shader shader;
 
@@ -54,10 +55,10 @@ public class Plane_Renderer_001 : MonoBehaviour
 //////// update information
 /////////////////////////////////////////////////////////////
 
-	public string TextureChannel0 = "GeometryImage21";
-	public string TextureChannel1 = "GeometryImage22";
-	public string TextureChannel2;
-	public string TextureChannel3;
+	public string TextureChannel0 = "GeometryImage25";
+	public string TextureChannel1 = "GeometryImage26";
+	public string TextureChannel2 = "";
+	public string TextureChannel3 = "";
 
 
 
@@ -111,20 +112,31 @@ public class Plane_Renderer_001 : MonoBehaviour
 
     	if(UsePathShader_bool == false)
     	{
-		 	pathShader_string = "Shaders2D/PortalGreen";
-    	}
+		 	pathShader_string = "Shaders2D/DigitalBrain";
+    	}						
 
     	renderer = GetComponent<Renderer>();
+    	
+
+    	material2 = new Material(Shader.Find(pathShader_string));
     	// material = renderer.material;
-    	material = new Material(Shader.Find(pathShader_string));
+		material = new Material(Shader.Find("Shaders2D/SpiralRainbow"));
+
 
     	renderer.material = material;
+    	renderer.material = material2;
+
 		// shader = material.shader;
 
 		if (SystemInfo.supportsInstancing)
 		{
+			material2.enableInstancing = true;
 			material.enableInstancing = true;
+			// material2.enableInstancing = true;
 		}
+	
+		TextureChannel0 = TextureChannel0;
+		TextureChannel1 = TextureChannel1;
 
 		TextureToShaderChannel0 = (Texture2D)Resources.Load(TextureChannel0);
 		TextureToShaderChannel1 = (Texture2D)Resources.Load(TextureChannel1);
@@ -135,6 +147,13 @@ public class Plane_Renderer_001 : MonoBehaviour
 		material.SetTexture("_TextureChannel1", TextureToShaderChannel1);
 		material.SetTexture("_TextureChannel2", TextureToShaderChannel2);
 		material.SetTexture("_TextureChannel3", TextureToShaderChannel3);
+
+		material2.SetTexture("_TextureChannel0", TextureToShaderChannel0);
+		material2.SetTexture("_TextureChannel1", TextureToShaderChannel1);
+		material2.SetTexture("_TextureChannel2", TextureToShaderChannel2);
+		material2.SetTexture("_TextureChannel3", TextureToShaderChannel3);
+		// 
+
 		// material.SetFloat("_ValueFloat", 1.0f);
 
 
@@ -208,25 +227,6 @@ public class Plane_Renderer_001 : MonoBehaviour
 		return _materialPropertyBlock;
 	}
 
-
-	void SetInitialValues(float StickerType)
-	{
-		if(StickerType == 1)
-		{
-			BorderSizeOne = 1f;//
-			BorderSizeTwo = 23f;//
-			BorderBlurriness = 90f;
-			RangeSOne_One0 = 1f;
-			RangeSOne_One1 = 0.11f;
-			RangeSOne_One2 = 1f;
-			RangeSOne_One3 = 1f;
-			RangeSTen_Ten0 = 7f;
-			RangeSTen_Ten1 = 3.1f;
-			RangeSTen_Ten2 = 1f;
-			RangeSTen_Ten3 = 1f;
-		}
-
-	}
 
 
 	void SetInitialValuesRef(ref ShaderInfo information)
@@ -322,16 +322,25 @@ public class Plane_Renderer_001 : MonoBehaviour
 
 		// renderer.material.SetFloat("_FloatNumber", 1.0f);
 
-
 		// Shader.SetGlobalVector("_VectorVariable", globalVector);
 
 		// Shader.SetGlobalInt("_IntVariable", 1);
 
 		// renderer.material.SetInt("_IntNumber", 1);
 
+
 		if(Input.GetKeyDown(KeyCode.L))
 		{
 			BorderSizeTwo += 1.0f;
+
+	    	// material = new Material(Shader.Find("Shaders2D/DigitalBrain"));
+	
+	    	renderer.material = material;
+
+			// _materialPropertyBlock = SetMaterialPropertyBlock();
+	
+			// renderer.SetPropertyBlock(_materialPropertyBlock);
+
 			// renderer.material.SetFloat("_FloatNumber", 1.0f);
 			// Shader.SetGlobalVector("_VectorVariable", globalVector);
 			// Shader.SetGlobalFloat("_FloatVariable", 1.0f);
@@ -341,7 +350,15 @@ public class Plane_Renderer_001 : MonoBehaviour
 
 		if(Input.GetKeyDown(KeyCode.K))
 		{
-			BorderSizeTwo -= 1.0f;
+	    	// material = new Material(Shader.Find("Shaders2D/XBall"));
+
+			renderer.material = material2;
+
+			// BorderSizeTwo -= 1.0f;
+
+			// _materialPropertyBlock = SetMaterialPropertyBlock();
+	
+			// renderer.SetPropertyBlock(_materialPropertyBlock);
 
 			// renderer.material.SetFloat("_FloatNumber", 0.0f);
 			// Shader.SetGlobalVector("_VectorVariable", globalVector);

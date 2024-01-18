@@ -108,6 +108,7 @@
 				o.uv = v.uv;
 				return o;
 			}
+			
 			#define Number _FloatNumber
 			#define NumberOne _FloatVariable
 
