@@ -187,6 +187,7 @@ float SDFLetter_A(float2 coordinateScale, float2 coordPosition)
 				
 
 			    float3 colorShader = ShaderWaves(coordinate, coordinateScale);
+			    
                 // coordinateScale *= float2(4.0, 1.0);
                 // coordinateFull *= float2(4.0, 1.0);
 // 

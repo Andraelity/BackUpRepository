@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using ShaderInfoNamespace;
+using ShaderInfo_Namespace;
 
 
-namespace MainStickerState
+namespace MainStickerState_Namespace
 {
 
 	static public class MainStickerStateClass 

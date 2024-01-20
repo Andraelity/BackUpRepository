@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace ShaderInfoNamespace
+namespace ShaderInfo_Namespace
 {
 
 	public struct ShaderInfo
@@ -32,12 +32,15 @@ namespace ShaderInfoNamespace
 
 
 
-namespace StickerName
+namespace StickerName_Namespace
 {
 	public static class StickerNameClass
 	{
 
 		public static string[] StickerNameStringArray;
+		public static string[] ShaderPathNameStringArray;
+
+
 
 		public static void SetStickerNameStringArray()
 		{
@@ -92,10 +95,17 @@ namespace StickerName
 
 		}
 
-		public static void SetShaderPathStringArray()
+
+		public static string[] GetStickerNameStringArray()
+		{
+			return StickerNameStringArray;
+		}
+
+
+		public static void SetShaderPathNameStringArray()
 		{
 
-			StickerNameStringArray = new string[]
+			ShaderPathNameStringArray = new string[]
 			{
 				"Shaders2D/BallOfFire",
 				"Shaders2D/BookShelf",
@@ -121,24 +131,57 @@ namespace StickerName
 				"Shaders2D/PortalGreen",
 				"Shaders2D/SimplicityGalaxy",
 				"Shaders2D/DigitalBrain",
-				"Shaderss2D/SpiralRainbow",
+				"Shaders2D/SpiralRainbow",
 				"Shaders2D/FurSphere",
 				"Shaders2D/GlowingBlobs",
 				"Shaders2D/XBall",
-				"Shaders2D/WarpSpeed",
-
+				"Shaders2D/WarpSpeed"
 			};
 
 		}
 
-
-		public static string[] GetStickerNameStringArray()
+		public static string[] GetShaderPathNameStringArray()
 		{
-			return StickerNameStringArray;
+			return ShaderPathNameStringArray;
 		}
 
-
-
 	}
+
+}
+namespace ShaderName_Enum_Namespace
+{
+	public enum ShaderName_Enum 
+	{
+		BallOfFire,
+		BookShelf,
+		BubblingPuls,
+		Waves,
+		PlasmaFlower,
+		PlaneShaderWork,
+		MandelFire,
+		FireAndWater,
+		Noise2D,
+		PlanetSpace,
+		Star,
+		CirclesDisco,
+		PaintTexture,
+		FractalPyramid,
+		Bubble,
+		StarFractal,
+		WetNeural,
+		PulsatingPink,
+		LaserBeam,
+		Clouds,
+		GlowingMarbling,
+		PortalGreen,
+		SimplicityGalaxy,
+		DigitalBrain,
+		SpiralRainbow,
+		FurSphere,
+		GlowingBlobs,
+		XBall,
+		WarpSpeed
+	};
+
 
 }
