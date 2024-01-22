@@ -75,6 +75,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2adaaf90432f5094aa96da94346809a9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TextureSprite:
+        m_Texture: {fileID: 2800000, guid: 235e7bfea1d7f7a4989a04052ddaed12, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BorderBlurriness: 40
@@ -87,10 +91,17 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _InVariableRatioX: 4
+    - _InVariableRatioY: 4
+    - _InVariableTickX: 1
+    - _InVariableTickY: 2.42
     - _Metallic: 0
     - _Mode: 0
     - _MotionState: 1
+    - _MyTime: 1
     - _OcclusionStrength: 1
+    - _OutlineSprite: 1
+    - _OverlaySelection: 0
     - _Parallax: 0.02
     - _RangeSOne_One0: 1
     - _RangeSOne_One1: 0
@@ -106,6 +117,10 @@ Material:
     - _StickerType: 9
     - _UVSec: 0
     - _ZWrite: 1
+    - _inVariableRatioX: 1
+    - _inVariableRatioY: 1
+    - _inVariableTickX: 1
+    - _inVariableTickY: 1
     m_Colors:
     - _BorderColor: {r: 0, g: 1, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

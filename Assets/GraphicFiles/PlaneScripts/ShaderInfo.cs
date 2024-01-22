@@ -27,6 +27,15 @@ namespace ShaderInfo_Namespace
 		public float RangeSOne_One3;
 	}
 
+	public struct ShaderInfoSprite
+	{
+    	public float InVariableTick;
+    	public float InVariableRatioX;
+    	public float InVariableRatioY;
+    	public float OutlineSprite;
+	
+	}
+
 }
 
 

@@ -17,9 +17,12 @@ public class Plane_Renderer_001 : MonoBehaviour
     // Start is called before the first frame update
 
 
-	private static ShaderInfo variableShaderInfo;
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////UPDATE INFORMATION ////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-	private static MaterialPropertyBlock _materialPropertyBlock;
+	private static ShaderInfo variableShaderInfo;
+    private static ShaderInfoSprite variableShaderInfoSprite;
 
 	private Renderer renderer;
 
@@ -37,6 +40,7 @@ public class Plane_Renderer_001 : MonoBehaviour
  	[Header("Set active the box up to use predetermined path")]
 	public string pathShader_string = "Shaders2D/CirclesDisco";
 	private string pathShader_string2 = "Shaders2D/CirclesDisco";
+
  	[Header("Set active OnPlayMode to change the SHADER using Path")]
 	public bool Path_LOADSHADERONRUNTIME = false;
 
@@ -46,11 +50,16 @@ public class Plane_Renderer_001 : MonoBehaviour
 	public bool LOADSHADERONRUNTIME = false;
 
 
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////UPDATE INFORMATION ////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
 
-/////////////////////////////////////////////////////////////
-//////// update information
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////TEXTURE INFORMATION ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
+    private string containerTextureSprite = "_TextureSprite";
 
 
 	private string containerTextureChannel0 = "_TextureChannel0";
@@ -58,12 +67,16 @@ public class Plane_Renderer_001 : MonoBehaviour
 	private string containerTextureChannel2 = "_TextureChannel2";
 	private string containerTextureChannel3 = "_TextureChannel3";
 
+    private Texture2D TextureToShaderSprite;
+
 	private Texture2D TextureToShaderChannel0;
 	private Texture2D TextureToShaderChannel1;
 	private Texture2D TextureToShaderChannel2;
 	private Texture2D TextureToShaderChannel3;
 
  	[Header("TEXTURE NAME DETAIL ON RESOURCES FOLDER")]
+    public string TextureSprite = "SpriteImage0";
+
 	public string TextureChannel0 = "GeometryImage23";
 	public string TextureChannel1 = "GeometryImage24";
 	public string TextureChannel2 = "GeometryImage25";
@@ -72,10 +85,25 @@ public class Plane_Renderer_001 : MonoBehaviour
  	[Header("TEXTURE NAME ")]
 	public bool LOADTEXTUREONRUNTIME = false;
 
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////TEXTURE INFORMATION ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////OVERLAY INFORMATION ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+    [Header("UNACTIVE == STICKERMODE /// ACTIVE == SPRITEMODE")]
+    public bool OverlaySelection = false;
+    private bool OverlaySelectionCurrent = false;
+
+    /////////////////////////////////STICKER INFORMATION/////////////////////////////////
  	// [Header("EditMode")]
  	[Header("Set active to Edit STICKERPROPERTIES")]
-	public bool EditValue = false;
+	public bool EditValueSticker = false;
 
  	[Header("StickerType")]
 	[Range(1, 80)]     	public int StickerType = 1;
@@ -95,6 +123,26 @@ public class Plane_Renderer_001 : MonoBehaviour
 	public float RangeSTen_Ten2 = 1f; // [Range(-10f, 10f)]
 	public float RangeSTen_Ten3 = 1f; // [Range(-10f, 10f)]
 
+    /////////////////////////////////STICKER INFORMATION/////////////////////////////////
+
+
+    /////////////////////////////////SPRITE INFORMATION/////////////////////////////////
+
+    [Header("Set active to Edit STICKERPROPERTIES")]
+    public bool EditValueSprite = false;
+
+    [Header("SPRITE SIZE X-AXIS")]
+    public int InVariableRatioX = 1;
+    [Header("SPRITE SIZE Y-AXIS")]
+    public int InVariableRatioY = 1;
+    [Header("TIME BETWEEN SPRITES")]
+    public int InVariableTick  = 10;
+    [Header("ACTIVE TO ADD OUTLINE")]
+    public bool OutlineSprite = false;
+
+    /////////////////////////////////SPRITE INFORMATION/////////////////////////////////
+
+
 
     private MeshCollider elementMeshCollider;
 	[Header("Set active to ENABLE MeshCollider/COLLISSION")]
@@ -104,9 +152,17 @@ public class Plane_Renderer_001 : MonoBehaviour
 	[Header("Set active to ENABLE RandomMotion")]
 	public bool enableMotion = false;
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////OVERLAY INFORMATION ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
 /////////////////////////////////////////////////////////////
 //////// update information
 /////////////////////////////////////////////////////////////
+
+	private const string stringOverlaySelection =  "_OverlaySelection";
+
 
 	private const string stringStickerType      = "_StickerType";
 	private const string stringMotionState      = "_MotionState";
@@ -128,16 +184,20 @@ public class Plane_Renderer_001 : MonoBehaviour
 
     private int currentStickerValue;
 
+    private const string stringInVariableTick   =  "_InVariableTick";
+    private const string stringInVariableRatioX =  "_InVariableRatioX";
+    private const string stringInVariableRatioY =  "_InVariableRatioY";
+    private const string stringOutlineSprite 	=  "_OutlineSprite";
+
     private int currentInstanceID;
 
-    Vector3 scaleValuesInitial;
 
 
     void Start()
     {
 
-
-    	scaleValuesInitial = transform.localScale;
+        EditValueSticker = false;
+        EditValueSprite = false;
 
     	currentInstanceID = gameObject.GetInstanceID();
 
@@ -167,28 +227,47 @@ public class Plane_Renderer_001 : MonoBehaviour
 
 		if (SystemInfo.supportsInstancing)
 		{
-			material2.enableInstancing = true;
-			material.enableInstancing = true;
+			// material2.enableInstancing = true;
+			// material.enableInstancing = true;
 			// material2.enableInstancing = true;
 		}
 	
+		float _OverlaySelectionFloat = (OverlaySelection)?1.0f:0.0f;
 
+		material.SetFloat(stringOverlaySelection, _OverlaySelectionFloat);
+
+
+        TextureToShaderSprite = (Texture2D)Resources.Load("SPRITE/" + TextureSprite);
 		TextureToShaderChannel0 = (Texture2D)Resources.Load(TextureChannel0);
 		TextureToShaderChannel1 = (Texture2D)Resources.Load(TextureChannel1);
 		TextureToShaderChannel2 = (Texture2D)Resources.Load(TextureChannel2);
 		TextureToShaderChannel3 = (Texture2D)Resources.Load(TextureChannel3);
 
+        material.SetTexture(containerTextureSprite, TextureToShaderSprite);
 		material.SetTexture(containerTextureChannel0, TextureToShaderChannel0);
 		material.SetTexture(containerTextureChannel1, TextureToShaderChannel1);
 		material.SetTexture(containerTextureChannel2, TextureToShaderChannel2);
 		material.SetTexture(containerTextureChannel3, TextureToShaderChannel3);
 
+        material2.SetTexture(containerTextureSprite, TextureToShaderSprite);
 		material2.SetTexture(containerTextureChannel0, TextureToShaderChannel0);
 		material2.SetTexture(containerTextureChannel1, TextureToShaderChannel1);
 		material2.SetTexture(containerTextureChannel2, TextureToShaderChannel2);
 		material2.SetTexture(containerTextureChannel3, TextureToShaderChannel3);
 
 		// material.SetFloat("_ValueFloat", 1.0f);
+
+
+        variableShaderInfoSprite = new ShaderInfoSprite
+        {
+
+            InVariableTick  = (float)InVariableTick,
+            InVariableRatioX = (float)InVariableRatioX,
+            InVariableRatioY = (float)InVariableRatioY,
+			OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f)
+        
+        
+        };
 
 		variableShaderInfo = new ShaderInfo
 		{
@@ -212,9 +291,12 @@ public class Plane_Renderer_001 : MonoBehaviour
 
 		// SetInitialValuesRef(ref variableShaderInfo);
 
-		_materialPropertyBlock = SetMaterialPropertyBlock();
+        SetInitialValuesRef(ref variableShaderInfo);
+        material = SetMaterialPropertiesSticker(material);
+        material = SetMaterialPropertiesSprite(material);
 
-		renderer.SetPropertyBlock(_materialPropertyBlock);
+        material2 = SetMaterialPropertiesSticker(material2);
+        material2 = SetMaterialPropertiesSprite(material2);
 
 		currentStickerValue = (int)variableShaderInfo.StickerType;
 
@@ -255,34 +337,44 @@ public class Plane_Renderer_001 : MonoBehaviour
     	return nameShaderArray[indexNameShaderArray];
     }
 
-	static MaterialPropertyBlock SetMaterialPropertyBlock()
-	{
-		if (_materialPropertyBlock == null)
-		{
-			_materialPropertyBlock = new MaterialPropertyBlock();
-		}
-		
-		_materialPropertyBlock.SetFloat(stringStickerType,  	 variableShaderInfo.StickerType);
-		_materialPropertyBlock.SetFloat(stringMotionState,  	 variableShaderInfo.MotionState);
 
-		_materialPropertyBlock.SetColor(stringBorderColor,       variableShaderInfo.BorderColor);
-		_materialPropertyBlock.SetFloat(stringBorderSizeOne,     variableShaderInfo.BorderSizeOne);
-		_materialPropertyBlock.SetFloat(stringBorderSizeTwo,     variableShaderInfo.BorderSizeTwo);
-		_materialPropertyBlock.SetFloat(stringBorderBlurriness,  variableShaderInfo.BorderBlurriness);
+    static Material SetMaterialPropertiesSticker(Material materialObject)
+    {
+        
+        materialObject.SetFloat(stringStickerType,       variableShaderInfo.StickerType);
+        materialObject.SetFloat(stringMotionState,       variableShaderInfo.MotionState);
 
-		_materialPropertyBlock.SetFloat(stringRangeSOne_One0,    variableShaderInfo.RangeSOne_One0);
-		_materialPropertyBlock.SetFloat(stringRangeSOne_One1,    variableShaderInfo.RangeSOne_One1);
-		_materialPropertyBlock.SetFloat(stringRangeSOne_One2,    variableShaderInfo.RangeSOne_One2);
-		_materialPropertyBlock.SetFloat(stringRangeSOne_One3,    variableShaderInfo.RangeSOne_One3);
+        materialObject.SetColor(stringBorderColor,       variableShaderInfo.BorderColor);
+        materialObject.SetFloat(stringBorderSizeOne,     variableShaderInfo.BorderSizeOne);
+        materialObject.SetFloat(stringBorderSizeTwo,     variableShaderInfo.BorderSizeTwo);
+        materialObject.SetFloat(stringBorderBlurriness,  variableShaderInfo.BorderBlurriness);
 
-		_materialPropertyBlock.SetFloat(stringRangeSTen_Ten0,    variableShaderInfo.RangeSTen_Ten0);
-		_materialPropertyBlock.SetFloat(stringRangeSTen_Ten1,    variableShaderInfo.RangeSTen_Ten1);
-		_materialPropertyBlock.SetFloat(stringRangeSTen_Ten2,    variableShaderInfo.RangeSTen_Ten2);
-		_materialPropertyBlock.SetFloat(stringRangeSTen_Ten3,    variableShaderInfo.RangeSTen_Ten3);
+        materialObject.SetFloat(stringRangeSOne_One0,    variableShaderInfo.RangeSOne_One0);
+        materialObject.SetFloat(stringRangeSOne_One1,    variableShaderInfo.RangeSOne_One1);
+        materialObject.SetFloat(stringRangeSOne_One2,    variableShaderInfo.RangeSOne_One2);
+        materialObject.SetFloat(stringRangeSOne_One3,    variableShaderInfo.RangeSOne_One3);
+
+        materialObject.SetFloat(stringRangeSTen_Ten0,    variableShaderInfo.RangeSTen_Ten0);
+        materialObject.SetFloat(stringRangeSTen_Ten1,    variableShaderInfo.RangeSTen_Ten1);
+        materialObject.SetFloat(stringRangeSTen_Ten2,    variableShaderInfo.RangeSTen_Ten2);
+        materialObject.SetFloat(stringRangeSTen_Ten3,    variableShaderInfo.RangeSTen_Ten3);
+
+        return materialObject;
+
+    }
 
 
-		return _materialPropertyBlock;
-	}
+    static Material SetMaterialPropertiesSprite(Material materialObject)
+    {
+        
+        materialObject.SetFloat(stringInVariableTick,       variableShaderInfoSprite.InVariableTick);
+        materialObject.SetFloat(stringInVariableRatioX,     variableShaderInfoSprite.InVariableRatioX);
+        materialObject.SetFloat(stringInVariableRatioY,     variableShaderInfoSprite.InVariableRatioY);
+        materialObject.SetFloat(stringOutlineSprite,		variableShaderInfoSprite.OutlineSprite);
+
+        return materialObject;
+
+    }
 
 
 
@@ -329,19 +421,37 @@ public class Plane_Renderer_001 : MonoBehaviour
 
 		float timeNow = Time.realtimeSinceStartup;
 
-    	// transform.localScale =  scaleValuesInitial + new Vector3((float)(Math.Sin(timeNow * 10)) * 1.0f, 0.0f, (float)(Math.Sin(timeNow * 10)) * 1.0f ); 
+        if(OverlaySelection == true && EditValueSprite == true)
+        {
 
-    	// Debug.Log((float)Math.Abs(Math.Sin(timeNow * 9475)));
+                variableShaderInfoSprite = new ShaderInfoSprite
+                {
+        
+                    InVariableTick  = (float)InVariableTick,
+                    InVariableRatioX = (float)InVariableRatioX,
+                    InVariableRatioY = (float)InVariableRatioY,
+					OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f)
+        
+                };
+
+            
+                material = SetMaterialPropertiesSprite(material);
+
+
+        }  
+
 
     	if(LOADTEXTUREONRUNTIME)
     	{
     		LOADTEXTUREONRUNTIME = false;
 
+			TextureToShaderSprite = (Texture2D)Resources.Load("SPRITE/" + TextureSprite);
 			TextureToShaderChannel0 = (Texture2D)Resources.Load(TextureChannel0);
 			TextureToShaderChannel1 = (Texture2D)Resources.Load(TextureChannel1);
 			TextureToShaderChannel2 = (Texture2D)Resources.Load(TextureChannel2);
 			TextureToShaderChannel3 = (Texture2D)Resources.Load(TextureChannel3);
 	
+			material.SetTexture(containerTextureSprite, TextureToShaderSprite);
 			material.SetTexture(containerTextureChannel0, TextureToShaderChannel0);
 			material.SetTexture(containerTextureChannel1, TextureToShaderChannel1);
 			material.SetTexture(containerTextureChannel2, TextureToShaderChannel2);
@@ -379,8 +489,19 @@ public class Plane_Renderer_001 : MonoBehaviour
 
 		}
 
+		if(OverlaySelectionCurrent != OverlaySelection)
+		{
+			OverlaySelectionCurrent = OverlaySelection;
 
-    	if(EditValue == true)
+			float _OverlaySelectionFloat = (OverlaySelection)?1.0f:0.0f;
+	
+			material.SetFloat(stringOverlaySelection, _OverlaySelectionFloat);
+			// material2.SetFloat(stringOverlaySelection, _OverlaySelectionFloat);
+
+		}
+
+
+    	if(EditValueSticker == true)
     	{
 			variableShaderInfo = new ShaderInfo
 			{
@@ -403,9 +524,7 @@ public class Plane_Renderer_001 : MonoBehaviour
 				RangeSTen_Ten3 = RangeSTen_Ten3
 			};
 	
-			_materialPropertyBlock = SetMaterialPropertyBlock();
-	
-			renderer.SetPropertyBlock(_materialPropertyBlock);
+			material = SetMaterialPropertiesSticker(material);
 	
 	
 			if(((int)variableShaderInfo.StickerType )!= currentStickerValue)

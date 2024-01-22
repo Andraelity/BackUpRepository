@@ -11,365 +11,465 @@ using ShaderName_Enum_Namespace;
 
 public class ParticleHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
+	// Start is called before the first frame update
 
-    private static ShaderInfo variableShaderInfo;
+	private static ShaderInfo variableShaderInfo;
+	private static ShaderInfoSprite variableShaderInfoSprite;
 
-    public Material material;
+	private ParticleSystemRenderer particleSystemRenderer;
 
-    private ParticleSystemRenderer particleSystemRenderer;
-
-    private static MaterialPropertyBlock _materialPropertyBlock;
-
+	public Material material;
 
 
-    [Header("Set active to use selected SHADER")]
-    public bool UsePathShader_bool = false;
-
-    [Header("Set active the box up to use predetermined path")]
-    public string pathShader_string = "Shaders2D/CirclesDisco";
-    private string pathShader_string2 = "Shaders2D/CirclesDisco";
-    [Header("Set active OnPlayMode to change the SHADER using Path")]
-    public bool Path_LOADSHADERONRUNTIME = false;
 
 
-    [Header("Set active OnPlayMode to change the SHADER using Name")]
-    public ShaderName_Enum shaderName_enum;
-    public bool LOADSHADERONRUNTIME = false;
+	[Header("Set active to use selected SHADER")]
+	public bool UsePathShader_bool = false;
+
+	[Header("Set active the box up to use predetermined path")]
+	public string pathShader_string = "Shaders2D/CirclesDisco";
+	private string pathShader_string2 = "Shaders2D/CirclesDisco";
+	
+	[Header("Set active OnPlayMode to change the SHADER using Path")]
+	public bool Path_LOADSHADERONRUNTIME = false;
 
 
-    private string containerTextureChannel0 = "_TextureChannel0";
-    private string containerTextureChannel1 = "_TextureChannel1";
-    private string containerTextureChannel2 = "_TextureChannel2";
-    private string containerTextureChannel3 = "_TextureChannel3";
+	[Header("Set active OnPlayMode to change the SHADER using Name")]
+	public ShaderName_Enum shaderName_enum;
+	public bool LOADSHADERONRUNTIME = false;
 
-    private Texture2D TextureToShaderChannel0;
-    private Texture2D TextureToShaderChannel1;
-    private Texture2D TextureToShaderChannel2;
-    private Texture2D TextureToShaderChannel3;
 
-    [Header("TEXTURE NAME DETAIL ON RESOURCES FOLDER")]
-    public string TextureChannel0 = "GeometryImage21";
-    public string TextureChannel1 = "GeometryImage17";
-    public string TextureChannel2 = "GeometryImage25";
-    public string TextureChannel3 = "GeometryImage26";
-    
-    [Header("TEXTURE NAME ")]
-    public bool LOADTEXTUREONRUNTIME = false;
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////TEXTURE INFORMATION ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-    // [Header("EditMode")]
-    [Header("Set active to Edit STICKERPROPERTIES")]
-    public bool EditValue = false;
+	private string containerTextureSprite = "_TextureSprite";
 
-    [Header("StickerType")]
-    [Range(1, 80)]      public int StickerType = 1;
-                        public Color BorderColor = Color.green;
+	private string containerTextureChannel0 = "_TextureChannel0";
+	private string containerTextureChannel1 = "_TextureChannel1";
+	private string containerTextureChannel2 = "_TextureChannel2";
+	private string containerTextureChannel3 = "_TextureChannel3";
 
-    [Range(0, 1)]       public int MotionState = 1;
-    [Range(1f, 100f)]   public float BorderSizeOne = 1f;
-    [Range(1f, 100f)]   public float BorderSizeTwo = 1f;
-    [Range(0f, 152f)]   public float BorderBlurriness = 1f;
+	private Texture2D TextureToShaderSprite;
 
-    public float RangeSOne_One0 = 1f; // [Range(-1f, 1f)]  
-    public float RangeSOne_One1 = 1f; // [Range(-1f, 1f)]  
-    public float RangeSOne_One2 = 1f; // [Range(-1f, 1f)]  
-    public float RangeSOne_One3 = 1f; // [Range(-1f, 1f)]  
-    public float RangeSTen_Ten0 = 1f; // [Range(-10f, 10f)]
-    public float RangeSTen_Ten1 = 1f; // [Range(-10f, 10f)]
-    public float RangeSTen_Ten2 = 1f; // [Range(-10f, 10f)]
-    public float RangeSTen_Ten3 = 1f; // [Range(-10f, 10f)]
+	private Texture2D TextureToShaderChannel0;
+	private Texture2D TextureToShaderChannel1;
+	private Texture2D TextureToShaderChannel2;
+	private Texture2D TextureToShaderChannel3;
+
+	[Header("TEXTURE NAME DETAIL ON RESOURCES FOLDER")]
+	public string TextureSprite = "SpriteImage0";
+
+	public string TextureChannel0 = "GeometryImage21";
+	public string TextureChannel1 = "GeometryImage17";
+	public string TextureChannel2 = "GeometryImage25";
+	public string TextureChannel3 = "GeometryImage26";
+	
+	[Header("Set Active to reload nex TEXTURES at runtime")]
+	public bool LOADTEXTUREONRUNTIME = false;
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////TEXTURE INFORMATION ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+	[Header("UNACTIVE == STICKERMODE /// ACTIVE == SPRITEMODE")]
+	public bool OverlaySelection = false;
+	private bool OverlaySelectionCurrent = false;
+
+	/////////////////////////////////STICKER INFORMATION/////////////////////////////////
+	// [Header("EditMode")]
+	[Header("Set active to Edit STICKERPROPERTIES")]
+	public bool EditValueSticker = false;
+
+	[Header("StickerType")]
+	[Range(1, 80)]      public int StickerType = 1;
+						public Color BorderColor = Color.green;
+
+	[Range(0, 1)]       public int MotionState = 1;
+	[Range(1f, 100f)]   public float BorderSizeOne = 1f;
+	[Range(1f, 100f)]   public float BorderSizeTwo = 1f;
+	[Range(0f, 152f)]   public float BorderBlurriness = 1f;
+
+	public float RangeSOne_One0 = 1f; // [Range(-1f, 1f)]  
+	public float RangeSOne_One1 = 1f; // [Range(-1f, 1f)]  
+	public float RangeSOne_One2 = 1f; // [Range(-1f, 1f)]  
+	public float RangeSOne_One3 = 1f; // [Range(-1f, 1f)]  
+	public float RangeSTen_Ten0 = 1f; // [Range(-10f, 10f)]
+	public float RangeSTen_Ten1 = 1f; // [Range(-10f, 10f)]
+	public float RangeSTen_Ten2 = 1f; // [Range(-10f, 10f)]
+	public float RangeSTen_Ten3 = 1f; // [Range(-10f, 10f)]
+	/////////////////////////////////STICKER INFORMATION/////////////////////////////////
+
+
+	/////////////////////////////////SPRITE INFORMATION/////////////////////////////////
+
+	[Header("Set active to Edit STICKERPROPERTIES")]
+	public bool EditValueSprite = false;
+
+	[Header("SPRITE SIZE X-AXIS")]
+	public int InVariableRatioX = 1;
+	[Header("SPRITE SIZE Y-AXIS")]
+	public int InVariableRatioY = 1;
+	[Header("TIME BETWEEN SPRITES")]
+	public int InVariableTick  = 10;
+    [Header("ACTIVE TO ADD OUTLINE")]
+    public bool OutlineSprite = false;
+
+
+	/////////////////////////////////SPRITE INFORMATION/////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////
 //////// update information
 /////////////////////////////////////////////////////////////
 
-    private const string stringStickerType      = "_StickerType";
-    private const string stringMotionState      = "_MotionState";
-
-    private const string stringBorderColor      = "_BorderColor";
-    private const string stringBorderSizeOne    = "_BorderSizeOne";
-    private const string stringBorderSizeTwo    = "_BorderSizeTwo";
-    private const string stringBorderBlurriness = "_BorderBlurriness";
-
-    private const string stringRangeSTen_Ten0   = "_RangeSTen_Ten0";
-    private const string stringRangeSTen_Ten1   = "_RangeSTen_Ten1";
-    private const string stringRangeSTen_Ten2   = "_RangeSTen_Ten2";
-    private const string stringRangeSTen_Ten3   = "_RangeSTen_Ten3";
-
-    private const string stringRangeSOne_One0   = "_RangeSOne_One0";
-    private const string stringRangeSOne_One1   = "_RangeSOne_One1";
-    private const string stringRangeSOne_One2   = "_RangeSOne_One2";
-    private const string stringRangeSOne_One3   = "_RangeSOne_One3";
-
-    private int currentStickerValue;
-
-    private int currentInstanceID;
 
 
-    void Start()
-    {
-    
-        currentInstanceID = gameObject.GetInstanceID();
+	private const string stringOverlaySelection =  "_OverlaySelection";
+
+	
+	private const string stringStickerType      = "_StickerType";
+	private const string stringMotionState      = "_MotionState";
+
+	private const string stringBorderColor      = "_BorderColor";
+	private const string stringBorderSizeOne    = "_BorderSizeOne";
+	private const string stringBorderSizeTwo    = "_BorderSizeTwo";
+	private const string stringBorderBlurriness = "_BorderBlurriness";
+
+	private const string stringRangeSTen_Ten0   = "_RangeSTen_Ten0";
+	private const string stringRangeSTen_Ten1   = "_RangeSTen_Ten1";
+	private const string stringRangeSTen_Ten2   = "_RangeSTen_Ten2";
+	private const string stringRangeSTen_Ten3   = "_RangeSTen_Ten3";
+
+	private const string stringRangeSOne_One0   = "_RangeSOne_One0";
+	private const string stringRangeSOne_One1   = "_RangeSOne_One1";
+	private const string stringRangeSOne_One2   = "_RangeSOne_One2";
+	private const string stringRangeSOne_One3   = "_RangeSOne_One3";
+
+	private int currentStickerValue;
+
+	private const string stringInVariableTick   =  "_InVariableTick";
+	private const string stringInVariableRatioX =  "_InVariableRatioX";
+	private const string stringInVariableRatioY =  "_InVariableRatioY";
+    private const string stringOutlineSprite 	=  "_OutlineSprite";
+
+	private int currentInstanceID;
 
 
-        pathShader_string = "Unlit/ParticleShader";
-        
+	void Start()
+	{
+	
+		EditValueSticker = false;
+		EditValueSprite = false;
+
+		currentInstanceID = gameObject.GetInstanceID();
 
 
-        //////////////////////////// CHANGE THIS TO FALSE TO SET RANDOM BACKGROUND ON STICKERS////////////// 
-        if(UsePathShader_bool == true)
-        {
-            pathShader_string = GetRandomStringShaderPath(currentInstanceID);
-            pathShader_string2 = GetRandomStringShaderPath(currentInstanceID + 10);
-
-        }                       
+		pathShader_string = "Shaders2D/ParticleShader";
+		
 
 
-    	particleSystemRenderer = GetComponent<ParticleSystemRenderer>();
-    	Debug.Log(particleSystemRenderer.material);
-    	Debug.Log(particleSystemRenderer.material.shader);
-    	Debug.Log(material);
+		//////////////////////////// CHANGE THIS TO FALSE TO SET RANDOM BACKGROUND ON STICKERS////////////// 
+		if(UsePathShader_bool == true)
+		{
+			pathShader_string = GetRandomStringShaderPath(currentInstanceID);
+			pathShader_string2 = GetRandomStringShaderPath(currentInstanceID + 10);
 
-        material = new Material(Shader.Find(pathShader_string));
-
-        particleSystemRenderer.material = material;
+		}                       
 
 
-        if (SystemInfo.supportsInstancing)
-        {
-            // material2.enableInstancing = true;
-            material.enableInstancing = true;
-            // material2.enableInstancing = true;
-        }
+		particleSystemRenderer = GetComponent<ParticleSystemRenderer>();
+		// Debug.Log(particleSystemRenderer.material);
+		// Debug.Log(particleSystemRenderer.material.shader);
+		// Debug.Log(material);
 
-        TextureToShaderChannel0 = (Texture2D)Resources.Load(TextureChannel0);
-        TextureToShaderChannel1 = (Texture2D)Resources.Load(TextureChannel1);
-        TextureToShaderChannel2 = (Texture2D)Resources.Load(TextureChannel2);
-        TextureToShaderChannel3 = (Texture2D)Resources.Load(TextureChannel3);
 
-        material.SetTexture(containerTextureChannel0, TextureToShaderChannel0);
-        material.SetTexture(containerTextureChannel1, TextureToShaderChannel1);
-        material.SetTexture(containerTextureChannel2, TextureToShaderChannel2);
-        material.SetTexture(containerTextureChannel3, TextureToShaderChannel3);
+		if (SystemInfo.supportsInstancing)
+		{
+			// material2.enableInstancing = true;
+			// material.enableInstancing = true;
+			// material2.enableInstancing = true;
+		}
 
-        variableShaderInfo = new ShaderInfo
-        {
-            StickerType = StickerType,
-            MotionState = MotionState,
-            BorderColor = BorderColor,
-            BorderSizeOne = BorderSizeOne, 
-            BorderSizeTwo = BorderSizeTwo, 
-            BorderBlurriness = BorderBlurriness,
+		material = new Material(Shader.Find(pathShader_string));
 
-            RangeSTen_Ten0 = RangeSTen_Ten0,
-            RangeSTen_Ten1 = RangeSTen_Ten1,
-            RangeSTen_Ten2 = RangeSTen_Ten2,
-            RangeSTen_Ten3 = RangeSTen_Ten3,
-
-            RangeSOne_One0 = RangeSOne_One0,
-            RangeSOne_One1 = RangeSOne_One1,
-            RangeSOne_One2 = RangeSOne_One2,
-            RangeSOne_One3 = RangeSOne_One3
-        };
-
-        // SetInitialValues(StickerType);
-        SetInitialValuesRef(ref variableShaderInfo);
-        material = SetMaterialProperties(material);
-
-        // _materialPropertyBlock = SetMaterialPropertyBlock();
-        // Debug.Log(particleSystemRenderer.HasPropertyBlock() + "     has property block");
-        // _materialPropertyBlock = new MaterialPropertyBlock();
+		particleSystemRenderer.material = material;
 
 
 
-        // _materialPropertyBlock.SetFloat(stringStickerType,       1.0f);
-        // _materialPropertyBlock.SetColor(stringBorderColor,  Color.cyan);
+		float _OverlaySelectionFloat = (OverlaySelection)?1.0f:0.0f;
 
-        // particleSystemRenderer.SetPropertyBlock(_materialPropertyBlock);
-
-        // MaterialPropertyBlock materialProperty2 = new MaterialPropertyBlock();
-        // particleSystemRenderer.GetPropertyBlock(materialProperty2);
-        
-        // // for(int i = 0; i < 1000; i++)
-        // {
-        //     Debug.Log(materialProperty2.GetFloat(stringStickerType));
-        // }
-// 
-        currentStickerValue = (int)variableShaderInfo.StickerType;
+		material.SetFloat(stringOverlaySelection, _OverlaySelectionFloat);
+		
 
 
-    }
+		TextureToShaderSprite = (Texture2D)Resources.Load("SPRITE/" + TextureSprite);
+		TextureToShaderChannel0 = (Texture2D)Resources.Load(TextureChannel0);
+		TextureToShaderChannel1 = (Texture2D)Resources.Load(TextureChannel1);
+		TextureToShaderChannel2 = (Texture2D)Resources.Load(TextureChannel2);
+		TextureToShaderChannel3 = (Texture2D)Resources.Load(TextureChannel3);
+
+		material.SetTexture(containerTextureSprite, TextureToShaderSprite);
+		material.SetTexture(containerTextureChannel0, TextureToShaderChannel0);
+		material.SetTexture(containerTextureChannel1, TextureToShaderChannel1);
+		material.SetTexture(containerTextureChannel2, TextureToShaderChannel2);
+		material.SetTexture(containerTextureChannel3, TextureToShaderChannel3);
 
 
-    static string GetRandomStringShaderPath(int valueSeed)
-    {
+		variableShaderInfoSprite = new ShaderInfoSprite
+		{
 
-        System.DateTime valueTime = new System.DateTime();
+			InVariableTick  = (float)InVariableTick,
+			InVariableRatioX = (float)InVariableRatioX,
+			InVariableRatioY = (float)InVariableRatioY,
+			OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f)
 
-        int valueDateint = valueTime.Hour + valueTime.Minute + valueTime.Second;
-        
-        System.Random variableRandom = new System.Random(valueDateint + valueSeed);
-
-
-
-        StickerNameClass.SetShaderPathNameStringArray();
-        string[]  nameShaderArray = StickerNameClass.GetShaderPathNameStringArray();
-
-        // foreach(string nameShader in nameShaderArray)
-        // {
-        //  Debug.Log("Name Shader Path == " + nameShader);
-        // }
-
-        int indexNameShaderArray = variableRandom.Next(0, nameShaderArray.Length);
-
-        return nameShaderArray[indexNameShaderArray];
-        
-    }
+		};
 
 
-    static Material SetMaterialProperties(Material materialObject)
-    {
-        
-        materialObject.SetFloat(stringStickerType,       variableShaderInfo.StickerType);
-        materialObject.SetFloat(stringMotionState,       variableShaderInfo.MotionState);
+		variableShaderInfo = new ShaderInfo
+		{
+			StickerType = StickerType,
+			MotionState = MotionState,
+			BorderColor = BorderColor,
+			BorderSizeOne = BorderSizeOne, 
+			BorderSizeTwo = BorderSizeTwo, 
+			BorderBlurriness = BorderBlurriness,
 
-        materialObject.SetColor(stringBorderColor,       variableShaderInfo.BorderColor);
-        materialObject.SetFloat(stringBorderSizeOne,     variableShaderInfo.BorderSizeOne);
-        materialObject.SetFloat(stringBorderSizeTwo,     variableShaderInfo.BorderSizeTwo);
-        materialObject.SetFloat(stringBorderBlurriness,  variableShaderInfo.BorderBlurriness);
+			RangeSTen_Ten0 = RangeSTen_Ten0,
+			RangeSTen_Ten1 = RangeSTen_Ten1,
+			RangeSTen_Ten2 = RangeSTen_Ten2,
+			RangeSTen_Ten3 = RangeSTen_Ten3,
 
-        materialObject.SetFloat(stringRangeSOne_One0,    variableShaderInfo.RangeSOne_One0);
-        materialObject.SetFloat(stringRangeSOne_One1,    variableShaderInfo.RangeSOne_One1);
-        materialObject.SetFloat(stringRangeSOne_One2,    variableShaderInfo.RangeSOne_One2);
-        materialObject.SetFloat(stringRangeSOne_One3,    variableShaderInfo.RangeSOne_One3);
+			RangeSOne_One0 = RangeSOne_One0,
+			RangeSOne_One1 = RangeSOne_One1,
+			RangeSOne_One2 = RangeSOne_One2,
+			RangeSOne_One3 = RangeSOne_One3
+		};
 
-        materialObject.SetFloat(stringRangeSTen_Ten0,    variableShaderInfo.RangeSTen_Ten0);
-        materialObject.SetFloat(stringRangeSTen_Ten1,    variableShaderInfo.RangeSTen_Ten1);
-        materialObject.SetFloat(stringRangeSTen_Ten2,    variableShaderInfo.RangeSTen_Ten2);
-        materialObject.SetFloat(stringRangeSTen_Ten3,    variableShaderInfo.RangeSTen_Ten3);
+		// SetInitialValues(StickerType);
+		SetInitialValuesRef(ref variableShaderInfo);
+		material = SetMaterialPropertiesSticker(material);
+		material = SetMaterialPropertiesSprite(material);
 
-        return materialObject;
-
-    }
-
-
-
-    void SetInitialValuesRef(ref ShaderInfo information)
-    {
-        MainStickerStateClass.SetStickerState(ref information);
+		currentStickerValue = (int)variableShaderInfo.StickerType;
  
-        // StickerType = information.StickerType;
-        MotionState = (int)information.MotionState;
+		
 
-        BorderColor = information.BorderColor;
-        BorderSizeOne = information.BorderSizeOne; 
-        BorderSizeTwo = information.BorderSizeTwo; 
-        BorderBlurriness = information.BorderBlurriness;
+	}
 
-        RangeSOne_One0 = information.RangeSOne_One0;
-        RangeSOne_One1 = information.RangeSOne_One1;
-        RangeSOne_One2 = information.RangeSOne_One2;
-        RangeSOne_One3 = information.RangeSOne_One3;
 
-        RangeSTen_Ten0 = information.RangeSTen_Ten0;
-        RangeSTen_Ten1 = information.RangeSTen_Ten1;
-        RangeSTen_Ten2 = information.RangeSTen_Ten2;
-        RangeSTen_Ten3 = information.RangeSTen_Ten3;
+	static string GetRandomStringShaderPath(int valueSeed)
+	{
+
+		System.DateTime valueTime = new System.DateTime();
+
+		int valueDateint = valueTime.Hour + valueTime.Minute + valueTime.Second;
+		
+		System.Random variableRandom = new System.Random(valueDateint + valueSeed);
+
+
+
+		StickerNameClass.SetShaderPathNameStringArray();
+		string[]  nameShaderArray = StickerNameClass.GetShaderPathNameStringArray();
+
+		// foreach(string nameShader in nameShaderArray)
+		// {
+		//  Debug.Log("Name Shader Path == " + nameShader);
+		// }
+
+		int indexNameShaderArray = variableRandom.Next(0, nameShaderArray.Length);
+
+		return nameShaderArray[indexNameShaderArray];
+		
+	}
+
+
+	static Material SetMaterialPropertiesSticker(Material materialObject)
+	{
+		
+		materialObject.SetFloat(stringStickerType,       variableShaderInfo.StickerType);
+		materialObject.SetFloat(stringMotionState,       variableShaderInfo.MotionState);
+
+		materialObject.SetColor(stringBorderColor,       variableShaderInfo.BorderColor);
+		materialObject.SetFloat(stringBorderSizeOne,     variableShaderInfo.BorderSizeOne);
+		materialObject.SetFloat(stringBorderSizeTwo,     variableShaderInfo.BorderSizeTwo);
+		materialObject.SetFloat(stringBorderBlurriness,  variableShaderInfo.BorderBlurriness);
+
+		materialObject.SetFloat(stringRangeSOne_One0,    variableShaderInfo.RangeSOne_One0);
+		materialObject.SetFloat(stringRangeSOne_One1,    variableShaderInfo.RangeSOne_One1);
+		materialObject.SetFloat(stringRangeSOne_One2,    variableShaderInfo.RangeSOne_One2);
+		materialObject.SetFloat(stringRangeSOne_One3,    variableShaderInfo.RangeSOne_One3);
+
+		materialObject.SetFloat(stringRangeSTen_Ten0,    variableShaderInfo.RangeSTen_Ten0);
+		materialObject.SetFloat(stringRangeSTen_Ten1,    variableShaderInfo.RangeSTen_Ten1);
+		materialObject.SetFloat(stringRangeSTen_Ten2,    variableShaderInfo.RangeSTen_Ten2);
+		materialObject.SetFloat(stringRangeSTen_Ten3,    variableShaderInfo.RangeSTen_Ten3);
+
+		return materialObject;
+
+	}
+
+	static Material SetMaterialPropertiesSprite(Material materialObject)
+	{
+		
+		materialObject.SetFloat(stringInVariableTick,       variableShaderInfoSprite.InVariableTick);
+		materialObject.SetFloat(stringInVariableRatioX,     variableShaderInfoSprite.InVariableRatioX);
+		materialObject.SetFloat(stringInVariableRatioY,     variableShaderInfoSprite.InVariableRatioY);
+		materialObject.SetFloat(stringOutlineSprite,     	variableShaderInfoSprite.OutlineSprite);
+
+		return materialObject;
+
+	}
+
+
+
+
+	void SetInitialValuesRef(ref ShaderInfo information)
+	{
+		MainStickerStateClass.SetStickerState(ref information);
  
-    }
+		// StickerType = information.StickerType;
+		MotionState = (int)information.MotionState;
 
-    // Update is called once per frame
-    void Update()
-    {
+		BorderColor = information.BorderColor;
+		BorderSizeOne = information.BorderSizeOne; 
+		BorderSizeTwo = information.BorderSizeTwo; 
+		BorderBlurriness = information.BorderBlurriness;
 
+		RangeSOne_One0 = information.RangeSOne_One0;
+		RangeSOne_One1 = information.RangeSOne_One1;
+		RangeSOne_One2 = information.RangeSOne_One2;
+		RangeSOne_One3 = information.RangeSOne_One3;
 
-
-        if(LOADTEXTUREONRUNTIME)
-        {
-            LOADTEXTUREONRUNTIME = false;
-
-            TextureToShaderChannel0 = (Texture2D)Resources.Load(TextureChannel0);
-            TextureToShaderChannel1 = (Texture2D)Resources.Load(TextureChannel1);
-            TextureToShaderChannel2 = (Texture2D)Resources.Load(TextureChannel2);
-            TextureToShaderChannel3 = (Texture2D)Resources.Load(TextureChannel3);
-    
-            material.SetTexture(containerTextureChannel0, TextureToShaderChannel0);
-            material.SetTexture(containerTextureChannel1, TextureToShaderChannel1);
-            material.SetTexture(containerTextureChannel2, TextureToShaderChannel2);
-            material.SetTexture(containerTextureChannel3, TextureToShaderChannel3);
-
-        }
+		RangeSTen_Ten0 = information.RangeSTen_Ten0;
+		RangeSTen_Ten1 = information.RangeSTen_Ten1;
+		RangeSTen_Ten2 = information.RangeSTen_Ten2;
+		RangeSTen_Ten3 = information.RangeSTen_Ten3;
+ 
+	}
 
 
-        if(Path_LOADSHADERONRUNTIME)
-        {
+	void Update()
+	{
 
-            Path_LOADSHADERONRUNTIME = false;
+		float timeNow = Time.realtimeSinceStartup;
 
-            string pathToShader = pathShader_string;
+		if(OverlaySelection == true && EditValueSprite == true)
+		{
 
-            Shader shaderOnRuntime  = Shader.Find(pathToShader);
-            material.shader = shaderOnRuntime;
+				variableShaderInfoSprite = new ShaderInfoSprite
+				{		
+					InVariableTick  = (float)InVariableTick,
+					InVariableRatioX = (float)InVariableRatioX,
+					InVariableRatioY = (float)InVariableRatioY,
+					OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f)
+				};
 
-        }
+			
+				material = SetMaterialPropertiesSprite(material);
 
 
-        if(LOADSHADERONRUNTIME)
-        {
+		}  
 
-            LOADSHADERONRUNTIME = false;
-            StickerNameClass.SetShaderPathNameStringArray();
-            string[] nameShaderArray = StickerNameClass.GetShaderPathNameStringArray();
 
-            int currentEnumValue = (int)shaderName_enum;
-            string nameShader_string = nameShaderArray[currentEnumValue];
+		if(LOADTEXTUREONRUNTIME)
+		{
+			LOADTEXTUREONRUNTIME = false;
 
-            pathShader_string = nameShader_string;
+			TextureToShaderSprite = (Texture2D)Resources.Load("SPRITE/" + TextureSprite);
+			TextureToShaderChannel0 = (Texture2D)Resources.Load(TextureChannel0);
+			TextureToShaderChannel1 = (Texture2D)Resources.Load(TextureChannel1);
+			TextureToShaderChannel2 = (Texture2D)Resources.Load(TextureChannel2);
+			TextureToShaderChannel3 = (Texture2D)Resources.Load(TextureChannel3);
+	
+			material.SetTexture(containerTextureSprite, TextureToShaderSprite);
+			material.SetTexture(containerTextureChannel0, TextureToShaderChannel0);
+			material.SetTexture(containerTextureChannel1, TextureToShaderChannel1);
+			material.SetTexture(containerTextureChannel2, TextureToShaderChannel2);
+			material.SetTexture(containerTextureChannel3, TextureToShaderChannel3);
 
-            Shader shaderOnRuntime  = Shader.Find(nameShader_string);
-            material.shader = shaderOnRuntime;
+		}
 
-        }
-        
 
-        if(EditValue == true)
-        {
-            variableShaderInfo = new ShaderInfo
-            {
-                StickerType = StickerType,
-                MotionState = MotionState,
-                BorderColor = BorderColor,
-                BorderSizeOne = BorderSizeOne, 
-                BorderSizeTwo = BorderSizeTwo, 
-                BorderBlurriness = BorderBlurriness,
-    
-    
-                RangeSOne_One0 = RangeSOne_One0,
-                RangeSOne_One1 = RangeSOne_One1,
-                RangeSOne_One2 = RangeSOne_One2,
-                RangeSOne_One3 = RangeSOne_One3,
-    
-                RangeSTen_Ten0 = RangeSTen_Ten0,
-                RangeSTen_Ten1 = RangeSTen_Ten1,
-                RangeSTen_Ten2 = RangeSTen_Ten2,
-                RangeSTen_Ten3 = RangeSTen_Ten3
-            };
-    
-            material = SetMaterialProperties(material);
-    
-            particleSystemRenderer.SetPropertyBlock(_materialPropertyBlock);
-    
-    
-            if(((int)variableShaderInfo.StickerType )!= currentStickerValue)
-            {
-    
-                SetInitialValuesRef(ref variableShaderInfo);
-                currentStickerValue = (int) variableShaderInfo.StickerType;
-            }
-        }
-        
-    }
+		if(Path_LOADSHADERONRUNTIME)
+		{
+
+			Path_LOADSHADERONRUNTIME = false;
+
+			string pathToShader = pathShader_string;
+
+			Shader shaderOnRuntime  = Shader.Find(pathToShader);
+			material.shader = shaderOnRuntime;
+
+		}
+
+
+		if(LOADSHADERONRUNTIME)
+		{
+
+			LOADSHADERONRUNTIME = false;
+			StickerNameClass.SetShaderPathNameStringArray();
+			string[] nameShaderArray = StickerNameClass.GetShaderPathNameStringArray();
+
+			int currentEnumValue = (int)shaderName_enum;
+			string nameShader_string = nameShaderArray[currentEnumValue];
+
+			pathShader_string = nameShader_string;
+
+			Shader shaderOnRuntime  = Shader.Find(nameShader_string);
+			material.shader = shaderOnRuntime;
+
+		}
+		
+		if(OverlaySelectionCurrent != OverlaySelection)
+		{
+			OverlaySelectionCurrent = OverlaySelection;
+
+			float _OverlaySelectionFloat = (OverlaySelection)?1.0f:0.0f;
+	
+			material.SetFloat(stringOverlaySelection, _OverlaySelectionFloat);
+
+		}
+
+
+		if(EditValueSticker == true)
+		{
+			variableShaderInfo = new ShaderInfo
+			{
+				StickerType = StickerType,
+				MotionState = MotionState,
+				BorderColor = BorderColor,
+				BorderSizeOne = BorderSizeOne, 
+				BorderSizeTwo = BorderSizeTwo, 
+				BorderBlurriness = BorderBlurriness,
+	
+	
+				RangeSOne_One0 = RangeSOne_One0,
+				RangeSOne_One1 = RangeSOne_One1,
+				RangeSOne_One2 = RangeSOne_One2,
+				RangeSOne_One3 = RangeSOne_One3,
+	
+				RangeSTen_Ten0 = RangeSTen_Ten0,
+				RangeSTen_Ten1 = RangeSTen_Ten1,
+				RangeSTen_Ten2 = RangeSTen_Ten2,
+				RangeSTen_Ten3 = RangeSTen_Ten3
+			};
+	
+			material = SetMaterialPropertiesSticker(material);
+		
+			if(((int)variableShaderInfo.StickerType )!= currentStickerValue)
+			{
+	
+				SetInitialValuesRef(ref variableShaderInfo);
+				currentStickerValue = (int) variableShaderInfo.StickerType;
+			}
+		}
+		
+	}
 }
 
 
