@@ -33,7 +33,7 @@ namespace ShaderInfo_Namespace
     	public float InVariableRatioX;
     	public float InVariableRatioY;
     	public float OutlineSprite;
-	
+		public Color OutlineColor;
 	}
 
 }
@@ -144,7 +144,8 @@ namespace StickerName_Namespace
 				"Shaders2D/FurSphere",
 				"Shaders2D/GlowingBlobs",
 				"Shaders2D/XBall",
-				"Shaders2D/WarpSpeed"
+				"Shaders2D/WarpSpeed",
+				"Shaders2D/70SPaint"
 			};
 
 		}

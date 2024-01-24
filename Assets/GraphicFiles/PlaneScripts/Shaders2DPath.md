@@ -27,3 +27,4 @@
 "Shaders2D/GlowingBlobs",
 "Shaders2D/XBall",
 "Shaders2D/WarpSpeed",
+"Shaders2D/70SPaint"

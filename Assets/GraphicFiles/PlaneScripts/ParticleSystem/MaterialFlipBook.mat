@@ -8,16 +8,19 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MaterialFlipBook
-  m_Shader: {fileID: 4800000, guid: d25d5fcf1291526449b85dafd9b2c4de, type: 3}
+  m_Shader: {fileID: 4800000, guid: e769167cb853eea4da6360279bb41858, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _RENDERING_FADE
+  - _SMOOTHNESS_ALBEDO
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -39,15 +42,27 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1cf916966872bde419a7caa8148ef027, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -59,28 +74,77 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TextureChannel0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureChannel1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureChannel2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureChannel3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSprite:
+        m_Texture: {fileID: 2800000, guid: 1cf916966872bde419a7caa8148ef027, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaColor: 0.32
     - _AnimationSpeed: 10
+    - _BorderBlurriness: 1
+    - _BorderSizeOne: 1
+    - _BorderSizeTwo: 1
     - _BumpScale: 1
     - _ColumnsX: 4
-    - _Cutoff: 0.5
+    - _Cutoff: 0.341
+    - _DetailBumpScale: 1
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Metallic: 0
+    - _GlowFull: 0
+    - _InVariableRatioX: 1
+    - _InVariableRatioY: 1
+    - _InVariableTickY: 1
+    - _Metallic: 0.294
     - _Mode: 0
+    - _MotionState: 1
     - _OcclusionStrength: 1
+    - _OutlineSprite: 1
+    - _OverlaySelection: 1
     - _Parallax: 0.02
+    - _ParallaxStrength: 0
+    - _RangeSOne_One0: 1
+    - _RangeSOne_One1: 1
+    - _RangeSOne_One2: 1
+    - _RangeSOne_One3: 1
+    - _RangeSTen_Ten0: 1
+    - _RangeSTen_Ten1: 1
+    - _RangeSTen_Ten2: 1
+    - _RangeSTen_Ten3: 1
     - _RowsY: 2
+    - _Smoothness: 0.397
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
+    - _StickerType: 1
     - _UVSec: 0
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BorderColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _ColorGlowHDR: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorOperation: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorValue: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission: {r: 0, g: 0.40392157, b: 0, a: 1}
+    - _EmissionColor: {r: 724.5283, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

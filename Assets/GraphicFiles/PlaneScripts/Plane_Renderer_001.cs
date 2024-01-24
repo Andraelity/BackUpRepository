@@ -11,7 +11,6 @@ using ShaderName_Enum_Namespace;
 
 // public enum Direction {North, East, South, West};
 
-
 public class Plane_Renderer_001 : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -32,7 +31,8 @@ public class Plane_Renderer_001 : MonoBehaviour
 	private Shader shader;
 
 
-
+	[ColorUsageAttribute(true,true,0f,8f,0.125f,3f)]
+	public Color colourValueHDR;
 
  	[Header("Set active to use selected SHADER")]
 	public bool UsePathShader_bool = false;
@@ -139,6 +139,7 @@ public class Plane_Renderer_001 : MonoBehaviour
     public int InVariableTick  = 10;
     [Header("ACTIVE TO ADD OUTLINE")]
     public bool OutlineSprite = false;
+	public Color OutlineColor = Color.black;    
 
     /////////////////////////////////SPRITE INFORMATION/////////////////////////////////
 
@@ -188,6 +189,7 @@ public class Plane_Renderer_001 : MonoBehaviour
     private const string stringInVariableRatioX =  "_InVariableRatioX";
     private const string stringInVariableRatioY =  "_InVariableRatioY";
     private const string stringOutlineSprite 	=  "_OutlineSprite";
+    private const string stringOutlineColor 	=  "_OutlineColor";
 
     private int currentInstanceID;
 
@@ -196,13 +198,15 @@ public class Plane_Renderer_001 : MonoBehaviour
     void Start()
     {
 
+    	Debug.Log(colourValueHDR);
+
         EditValueSticker = false;
         EditValueSprite = false;
 
     	currentInstanceID = gameObject.GetInstanceID();
 
 
-    	pathShader_string = "Shaders2D/XBall";
+    	pathShader_string = "Shaders2D/MandelFire";
 
 
     	//////////////////////////// CHANGE THIS TO FALSE TO SET RANDOM BACKGROUND ON STICKERS////////////// 
@@ -264,7 +268,8 @@ public class Plane_Renderer_001 : MonoBehaviour
             InVariableTick  = (float)InVariableTick,
             InVariableRatioX = (float)InVariableRatioX,
             InVariableRatioY = (float)InVariableRatioY,
-			OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f)
+			OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f),
+			OutlineColor = OutlineColor
         
         
         };
@@ -370,6 +375,7 @@ public class Plane_Renderer_001 : MonoBehaviour
         materialObject.SetFloat(stringInVariableTick,       variableShaderInfoSprite.InVariableTick);
         materialObject.SetFloat(stringInVariableRatioX,     variableShaderInfoSprite.InVariableRatioX);
         materialObject.SetFloat(stringInVariableRatioY,     variableShaderInfoSprite.InVariableRatioY);
+        materialObject.SetColor(stringOutlineColor,       	variableShaderInfoSprite.OutlineColor);
         materialObject.SetFloat(stringOutlineSprite,		variableShaderInfoSprite.OutlineSprite);
 
         return materialObject;
@@ -430,8 +436,8 @@ public class Plane_Renderer_001 : MonoBehaviour
                     InVariableTick  = (float)InVariableTick,
                     InVariableRatioX = (float)InVariableRatioX,
                     InVariableRatioY = (float)InVariableRatioY,
-					OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f)
-        
+					OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f),
+     				OutlineColor = OutlineColor   
                 };
 
             

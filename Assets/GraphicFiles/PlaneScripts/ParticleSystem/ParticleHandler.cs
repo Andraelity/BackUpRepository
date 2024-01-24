@@ -117,6 +117,7 @@ public class ParticleHandler : MonoBehaviour
 	public int InVariableTick  = 10;
     [Header("ACTIVE TO ADD OUTLINE")]
     public bool OutlineSprite = false;
+	public Color OutlineColor = Color.black;    
 
 
 	/////////////////////////////////SPRITE INFORMATION/////////////////////////////////
@@ -155,6 +156,7 @@ public class ParticleHandler : MonoBehaviour
 	private const string stringInVariableRatioX =  "_InVariableRatioX";
 	private const string stringInVariableRatioY =  "_InVariableRatioY";
     private const string stringOutlineSprite 	=  "_OutlineSprite";
+    private const string stringOutlineColor 	=  "_OutlineColor";
 
 	private int currentInstanceID;
 
@@ -168,7 +170,7 @@ public class ParticleHandler : MonoBehaviour
 		currentInstanceID = gameObject.GetInstanceID();
 
 
-		pathShader_string = "Shaders2D/ParticleShader";
+		pathShader_string = "Shaders2D/CirclesDisco";
 		
 
 
@@ -225,8 +227,8 @@ public class ParticleHandler : MonoBehaviour
 			InVariableTick  = (float)InVariableTick,
 			InVariableRatioX = (float)InVariableRatioX,
 			InVariableRatioY = (float)InVariableRatioY,
-			OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f)
-
+			OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f),
+			OutlineColor = OutlineColor
 		};
 
 
@@ -320,6 +322,7 @@ public class ParticleHandler : MonoBehaviour
 		materialObject.SetFloat(stringInVariableRatioX,     variableShaderInfoSprite.InVariableRatioX);
 		materialObject.SetFloat(stringInVariableRatioY,     variableShaderInfoSprite.InVariableRatioY);
 		materialObject.SetFloat(stringOutlineSprite,     	variableShaderInfoSprite.OutlineSprite);
+		materialObject.SetColor(stringOutlineColor, 		variableShaderInfoSprite.OutlineColor);
 
 		return materialObject;
 
@@ -366,7 +369,8 @@ public class ParticleHandler : MonoBehaviour
 					InVariableTick  = (float)InVariableTick,
 					InVariableRatioX = (float)InVariableRatioX,
 					InVariableRatioY = (float)InVariableRatioY,
-					OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f)
+					OutlineSprite = (float)((OutlineSprite)?1.0f:0.0f),
+					OutlineColor = OutlineColor
 				};
 
 			

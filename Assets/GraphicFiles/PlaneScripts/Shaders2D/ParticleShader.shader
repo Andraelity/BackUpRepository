@@ -32,6 +32,7 @@ Shader "Shaders2D/ParticleShader"
         _InVariableTickY(" _InVariableTickY", Float) = 1.0
         _InVariableRatioX("_InVariableRatioX", Float) = 1.0
         _InVariableRatioY("_InVariableRatioY", Float) = 1.0
+        _OutlineColor("_OutlineColor", Color) = (1.0, 1.0, 1.0, 1.0)
         _OutlineSprite("_OutlineSprite", Float) = 1.0
 
     }
@@ -102,6 +103,7 @@ Shader "Shaders2D/ParticleShader"
             float _InVariableTick;
             float _InVariableRatioX;
             float _InVariableRatioY;
+            float4 _OutlineColor;
             float _OutlineSprite;
 
             #define PI 3.1415926535897931
@@ -129,7 +131,6 @@ Shader "Shaders2D/ParticleShader"
             #include "Sprites.hlsl"
 
 
-
             /////////////////////////////////////////////////////////////////////////////////////////////
             // Default 
             /////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,15 +156,14 @@ Shader "Shaders2D/ParticleShader"
             }
 
 
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            /// DEFAULT
+            //////////////////////////////////////////////////////////////////////////////////////////////
 
             fixed4 FRAGMENTSHADER (pixelPoints PIXELSPACE) : SV_Target
             {
 
-                //////////////////////////////////////////////////////////////////////////////////////////////
-                /// DEFAULT
-                //////////////////////////////////////////////////////////////////////////////////////////////
                 float2 coordinateSprite = PIXELSPACE.uv2;
-                float2 coordinateSprite2 = PIXELSPACE.uv2;
 
                 float2 coordinate = PIXELSPACE.uv;
                 
@@ -178,6 +178,14 @@ Shader "Shaders2D/ParticleShader"
                 float3 colTexture = float3(coordinateScale.x + coordinateScale.y, coordinateScale.y - coordinateScale.x, pow(coordinate.x,2.0f));
 
 
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            /// DEFAULT
+            //////////////////////////////////////////////////////////////////////////////////////////////
+    
+                colBase = 0.0;
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -294,8 +302,8 @@ Shader "Shaders2D/ParticleShader"
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////LINES OF CODE FOR THE SPRITES ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    float4 colorOutputTotal = PaintSprite(coordinateSprite, colBackground, _TextureSprite, _InVariableTick,
-                                                                            _InVariableRatioX, _InVariableRatioY, _OutlineSprite);
+                    float4 colorOutputTotal = PaintSprite(coordinateSprite, colBackground, _TextureSprite, _OutlineColor,
+                                                            _InVariableTick, _InVariableRatioX, _InVariableRatioY, _OutlineSprite);
 
                     return colorOutputTotal;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,17 +312,19 @@ Shader "Shaders2D/ParticleShader"
 
                 }
 
-                // return  float4(_StickerType/10, _BorderSizeOne/10, _BorderSizeTwo/10, 1.0);
-                // return  col;
+                // float radio = 0.5;
+                // float2 point = float2(0.0, 0.0);
+                // float lenghtRadio = length(uv - point);
                 // if (lenghtRadio < radio)
                 // {
-                //     return float4(1.0, 1.0, 1.0, 1.0) + col;
-                //     // return col;
+                //     return float4(1.0, 1.0, 1.0, 1.0) ;
                 // }
                 // else
                 // {
                 //     return 0.0;
                 // }
+
+
 
             }
 
